@@ -1,0 +1,93 @@
+\documentclass[]{beamer}
+
+%%
+%% RWTH Beamer Theme (layout based on RWTH PowerPoint template)
+%% by Georg Wassen, Lehrstuhl für Betriebssysteme, 2013
+%%    wassen@lfbs.rwth-aachen.de
+%% with modifications by Gerrit Toehgiono, Mentoring Informatik, 2016-2018
+%% to match the "current old" RWTH template
+%%
+%% The templates are derived from the beamer documentation and the provided templates,
+%% hence, the same licence applies:
+%%
+%% ----------------------------------------------------------------
+%% |  This file may be distributed and/or modified                |
+%% |                                                              |
+%% |  1. under the LaTeX Project Public License and/or            |
+%% |  2. under the GNU Public License.                            |
+%% |                                                              |
+%% |  See the file doc/licenses/LICENSE for more details.         |
+%% ----------------------------------------------------------------
+%%
+%% Version 0.1    20.12.2012    Initial presentation using this theme
+%% Version 0.2    08.01.2013    Extracted layout and some example slides
+%% Version 0.3    12.01.2013    Improved handling of \subsection (used as frame title),
+%%                              Support institute's logo
+%% Version 0.4    22.01.2013    Improved spacing between lines in header & footer
+%% Version 0.5    01.02.2013    No right sidebar: set width correctly
+%% Version 1.0    06.03.2014    Initial Tag on GitHub
+%%
+%% Version 1.1    31.03.2018    Modifications for CS Mentoring
+%%
+%% TODO
+%%  - copyright of slides?
+%%  - count slides with same subsection (needs probably overloading \subsection) and print: 1/N
+%%    (needs to count the number of frames in each subsection)
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Select input file encoding:
+%%   utf8   - UTF-8, nowadays standard on most operating sytems
+%%   latin1 - ISO-8859-1
+\usepackage[utf8]{inputenc}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Select language
+%%
+\usepackage[ngerman]{babel}        % Deutsch, neue Rechtschreibung
+%\usepackage[english]{babel}       % English
+
+\usetheme{rwth}
+\usepackage[T1]{fontenc}           % Font encoding (don't change!)
+\usepackage{lmodern}               % Select Linux Modern Fonts (don't change)
+\usepackage{sansmathfonts}         % Sans fonts in math environments
+\usepackage{textcomp}              % fix 'missing font symbols' warning
+\renewcommand{\rmdefault}{phv}     % Arial like (Helvetica)
+\renewcommand{\sfdefault}{phv}     % Arial like (Helvetica)
+
+%% graphics related packages
+\usepackage{graphicx}              % needed to include graphics (don't change)
+\usepackage{epstopdf}              % required to include eps files
+%\usepackage{svg}                   % include svg files (requires Inkscape)
+\usepackage[encoding,filenameencoding=utf8]{grffile} % allow utf8 file names in graphics
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% import packages for content
+%%
+\usepackage{listings}                           % for lstlisting and \lstinline|..|
+%% TikZ can be used to /program/ graphics.
+\usepackage{tikz}                                % comment-out, if you don't need this.
+%% some TikZ-libraries and settings for the examples...
+\usetikzlibrary{shadings}           % GW: color gradients
+\usetikzlibrary{arrows,calc,positioning,fit,matrix,shadows,chains,arrows,shapes,spy,fadings}
+\usepackage{pgfplots}
+\usetikzlibrary{pgfplots.units,shapes.symbols,shapes.arrows}
+%\usetikzlibrary{pgfplots.external}
+%\tikzexternalize[prefix=tmp/]
+
+\include{my_includes}
+
+% include config
+\input{my_config}
+
+% disable PDF navigation icons
+\setbeamertemplate{navigation symbols}{}
+
+\begin{document}
+%%
+%% the title slide is generated automatically (at begin document)
+%%
+
+% include sections
+\input{sections}
+
+\end{document}
