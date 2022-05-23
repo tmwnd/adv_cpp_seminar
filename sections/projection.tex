@@ -1,3 +1,176 @@
 \begin{frame}{Projection}
+    A \emph{projection} is a unary callable which may ne passed to most algorithms.
 
+    \vspace{2.5em}
+
+    Projections modify the view of the data that the algorithms sees.
+\end{frame}
+
+\begin{frame}[fragile]{Projection - Beispiel}
+    \begin{minted}{cpp}
+struct Pokemon {
+    int id;
+    std::string name;
+    ...
+}
+struct PokedexEintrag {
+    int pokemon_id;
+    std::string beschreibung;
+}
+
+std::vector<Pokemon> pokemon;
+std::vector<PokedexEintrag> pokedex;
+    \end{minted}
+\end{frame}
+
+\begin{frame}{Projection - Beispiel}
+    Aufgabe:
+
+    Finde heraus, ob jedes Pokémon einen PokedexEintrag hat.
+\end{frame}
+
+\begin{frame}{Projection - Beispiel}
+    \begin{center}
+        \textbf{Erster Ansatz:}
+    \end{center}
+    \begin{enumerate}
+        \item Sortiere alle Pokemon (nach \texttt{id})
+        \item Sortiere alle PokedexEinträge (nach \texttt{pokemon\_id})
+        \item Gehe von oben alle Einträge durch.
+              Sobald die eine Liste die andere \enquote{überholt}, gib \texttt{false} zurück.
+        \item Wenn wir am Ende der Listen sind, gib \texttt{true} zurück
+    \end{enumerate}
+\end{frame}
+
+\begin{frame}[fragile]{Projection - Beispiel}
+    \begin{minted}{cpp}
+std::sort(pokemon.begin(), pokemon.end(),
+    [] (const Pokemon& p1, const Pokemon& p2) {
+        return p1.id <= p2.id;
+    });
+
+std::sort(pokedex.begin(), pokedex.end(),
+    [] (const PokedexEintrag& e1,
+        const PokedexEintrag& e2) {
+        return e1.pokemon_id <= e2.pokemon_id;
+    });
+    \end{minted}
+\end{frame}
+
+\begin{frame}[fragile]{Projection - Beispiel}
+    \begin{minted}{cpp}
+std::equal(
+    pokemon.begin(), pokemon.end(),
+    pokedex.begin(), pokedex.end(),
+    [] (const Pokemon& p, const PokedexEintrag& e) {
+        return p.id == p.pokemon_id;
+    });
+    \end{minted}
+\end{frame}
+
+\begin{frame}{Projection - Beispiel}
+    \begin{center}
+        \textbf{Zweiter Ansatz:}
+    \end{center}
+
+    \begin{itemize}
+        \item Erweitere Iteratoren durch Ranges
+        \item Ersetze \texttt{.begin()} bzw. \texttt{.end()}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Projection - Beispiel}
+    \begin{minted}{cpp}
+std::ranges::sort(pokemon,
+    [] (const Pokemon& p1, const Pokemon& p2) {
+        return p1.id <= p2.id;
+    });
+
+std::ranges::sort(pokedex,
+    [] (const PokedexEintrag& e1,
+        const PokedexEintrag& e2) {
+        return e1.pokemon_id <= e2.pokemon_id;
+    });
+    \end{minted}
+\end{frame}
+
+\begin{frame}[fragile]{Projection - Beispiel}
+    \begin{minted}{cpp}
+std::ranges::equal(pokemon, pokedex,
+    [] (const Pokemon& p, const PokedexEintrag& e) {
+        return p.id == p.pokemon_id;
+    });
+    \end{minted}
+\end{frame}
+
+\begin{frame}{Projection - Beispiel}
+    \begin{center}
+        \textbf{Dritter Ansatz:}
+    \end{center}
+
+    \begin{itemize}
+        \item Erweitere Ranges durch Projection
+        \item Reduziere jedes Pokemon auf einen \texttt{int}
+        \item Reduziere analog jeden PokedexEintrag auf einen \texttt{int}
+        \item Überlasse dem Compiler den Umgang mit diesen primitiven Datentypen
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Projection - Beispiel}
+    \begin{minted}{cpp}
+std::ranges::sort(pokemon, std::ranges::less{},
+    [] (const Pokemon& p) { return p.id; });
+
+std::ranges::sort(pokedex, std::ranges::less{},
+    [] (const PokedexEintrag& e) { return e.pokemon_id; });
+
+std::ranges::equal(pokemon, pokedex,
+    std::ranges::equal_to{},
+    [] (const Pokemon& p) { return p.id; }
+    [] (const PokedexEintrag& e) { return e.pokemon_id; }
+);
+    \end{minted}
+\end{frame}
+
+\begin{frame}{Projection - Beispiel}
+    \begin{center}
+        \textbf{Finaler Ansatz:}
+    \end{center}
+
+    \begin{itemize}
+        \item Ersetze \enquote{getter}-Lambdas durch die direkten Attribute
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Projection - Beispiel}
+    \begin{minted}{cpp}
+std::ranges::sort(pokemon, std::ranges::less{},
+    &Pokemon::id);
+
+std::ranges::sort(pokedex, std::ranges::less{},
+    &PokedexEintrag::pokemon_id);
+
+std::ranges::equal(pokemon, pokedex,
+    std::ranges::equal_to{},
+    &Pokemon::id, &PokedexEintrag::pokemon_id);
+    \end{minted}
+\end{frame}
+
+\begin{frame}{Projection - Beispiel}
+    \begin{center}
+        \SixStar \ \textbf{Finaler Ansatz:} \SixStar
+    \end{center}
+\end{frame}
+
+\begin{frame}[fragile]{Projection - Beispiel}
+    \begin{minted}{cpp}
+std::ranges::sort(pokemon, {},
+    &Pokemon::id);
+
+std::ranges::sort(pokedex, {},
+    &PokedexEintrag::pokemon_id);
+
+std::ranges::equal(pokemon, pokedex, {},
+    &Pokemon::id, &PokedexEintrag::pokemon_id);
+    \end{minted}
 \end{frame}

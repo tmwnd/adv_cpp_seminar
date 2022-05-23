@@ -7,6 +7,7 @@
 *.log
 *.toc
 *.fls
+_minted-slides/*
 
 # PDF output - usually a bad idea to keep this in Git
 *.pdf

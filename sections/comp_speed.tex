@@ -1,3 +1,92 @@
-\begin{frame}{(Compiler-) Geschwindigkeitsoptimierung}
+\begin{frame}[fragile]{(Compiler-) Geschwindigkeitsoptimierung}
+    \begin{minted}{cpp}
+std::vector<int> v{ 3, 1, 4, 1, 5, ... };
 
+std::find(
+    v.begin(), // iterator -> v[0]
+    v.end(),   // iterator -> nullptr
+    5          // ist immer im vector enthalten
+);
+    \end{minted}
+\end{frame}
+
+\begin{frame}[fragile]{(Compiler-) Geschwindigkeitsoptimierung}
+    \begin{minted}{cpp}
+std::vector<int>::iterator find(
+    std::vector<int>::iterator first,
+    std::vector<int>::iterator last,
+    const int&                 val
+) {
+    for (; first != last; ++first)
+        if (*first == val) break;
+    
+    return first;
+}
+    \end{minted}
+\end{frame}
+
+\begin{frame}[fragile]{(Compiler-) Geschwindigkeitsoptimierung}
+    \begin{minted}{cpp}
+std::vector<int> v{ 3, 1, 4, 1, 5, ... };
+
+std::find(
+    v.begin(), // iterator -> v[0]
+    ranges::unreachable_sentinal, // == it -> false
+    5          // ist immer im vector enthalten
+);
+    \end{minted}
+\end{frame}
+
+\begin{frame}{(Compiler-) Geschwindigkeitsoptimierung}
+    \begin{center}
+        A sentinel is some type that is \texttt{equality\_comparable\_with} its corresponding iterator, which denotes the end of the range.
+
+        \vspace{2.5em}
+
+        Für diese Beispiel benötigen wir den \texttt{unreachable\_sentinal}.
+    \end{center}
+\end{frame}
+
+\begin{frame}[fragile]{(Compiler-) Geschwindigkeitsoptimierung}
+    \begin{minted}{cpp}
+std::vector<int>::iterator find(
+    std::vector<int>::iterator     first,
+    ranges::unreachable_sentinal_t last,
+    const int&                     val
+) {
+    // first == last -> false
+    for (; first != last; ++first)
+        if (*first == val) break;
+    
+    return first;
+}
+    \end{minted}
+\end{frame}
+
+\begin{frame}[fragile]{(Compiler-) Geschwindigkeitsoptimierung}
+    \begin{minted}{cpp}
+std::vector<int>::iterator find(
+    std::vector<int>::iterator     first,
+    ranges::unreachable_sentinal_t last,
+    const int&                     val
+) {
+    // first == last -> false
+    for (; true; ++first)
+        if (*first == val) break;
+    
+    return first;
+}
+    \end{minted}
+\end{frame}
+
+\begin{frame}[fragile]{(Compiler-) Geschwindigkeitsoptimierung}
+    Mit dem bekannten Iterator \texttt{.end()} wird jedes Element des Vectors 2 mal \enquote{angefasst}:
+    \begin{itemize}
+        \item \mintinline{cpp}{first != last}
+        \item \mintinline{cpp}{*first == val}
+    \end{itemize}
+
+    \vspace{2.5em}
+
+    Durch Sentinals verringern wir diese Zugriffe um die Hälfte, haben jedoch Probleme, wenn \texttt{val} nicht im Vector enthalten ist.
 \end{frame}

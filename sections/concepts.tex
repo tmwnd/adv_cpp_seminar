@@ -1,3 +1,21 @@
 \begin{frame}{Concepts}
+    \begin{center}
+        Concepts allow us to control the instantiation of templates\\by testing syntactic conditions.
 
+        \vspace{2.5em}
+
+        It is a compile-time predicate which is true if the given type(s)\\meet the requirements.
+
+        \vspace{2.5em}
+
+        \enquote{SFINAE on steroids}
+    \end{center}
+\end{frame}
+
+\begin{frame}[fragile]{Concepts - Beispiel}
+    \begin{minted}{cpp}
+template <typename T>
+    requires string_convertible<T>
+std::string convert(const T& t) { return t.to_string(); }
+    \end{minted}
 \end{frame}
