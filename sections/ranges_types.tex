@@ -1,22 +1,24 @@
+\subsubsection{Range Concepts}
+
 \begin{frame}[fragile]{Range Concepts}
-\begin{itemize}
-    \item<1-> std::ranges::input\_range
-    \only<1->{\begin{itemize} \item std::cin \end{itemize}}
-    % \item<2-> std::ranges::forward\_range
-    % \only<2->{\begin{itemize} \item std::forward\_list \end{itemize}}
-    \item<3-> std::ranges::bidirectional\_range
-    \only<3->{\begin{itemize} \item std::list \end{itemize}}
-    \item<4-> std::ranges::random\_access\_range
-    \only<4->{\begin{itemize} \item std::unordered\_map \end{itemize}}
-    % \item<5-> std::ranges::contiguous\_range
-    % \only<5->{\begin{itemize} \item std::vector \end{itemize}}
-    \item<5-> std::ranges::sized\_range
-    \only<5->{\begin{itemize} \item std::vector \end{itemize}}
-\end{itemize}
+    \begin{itemize}
+        \item<1-> std::ranges::input\_range
+            \only<1->{\begin{itemize} \item std::cin \end{itemize}}
+            % \item<2-> std::ranges::forward\_range
+            % \only<2->{\begin{itemize} \item std::forward\_list \end{itemize}}
+        \item<3-> std::ranges::bidirectional\_range
+            \only<3->{\begin{itemize} \item std::list \end{itemize}}
+        \item<4-> std::ranges::random\_access\_range
+            \only<4->{\begin{itemize} \item std::unordered\_map \end{itemize}}
+            % \item<5-> std::ranges::contiguous\_range
+            % \only<5->{\begin{itemize} \item std::vector \end{itemize}}
+        \item<5-> std::ranges::sized\_range
+            \only<5->{\begin{itemize} \item std::vector \end{itemize}}
+    \end{itemize}
 \end{frame}
 
 \begin{frame}[fragile]{Bessere Fehlermeldungen}
-\begin{minted}[fontsize=\tiny, linenos]{console}
+    \begin{minted}[fontsize=\tiny, linenos]{console}
 error_messages.cpp:8:5: error: no matching function for call to object of type 'const std::ranges::__sort_fn'
     std::ranges::sort(list.begin(), list.end());
     ^~~~~~~~~~~~~~~~~

@@ -1,24 +1,4 @@
-\begin{frame}[fragile]{Implementierung anderer Programmiersprachen}
-\frametitle{Ranges in anderen Programmiersprachen}
-\begin{itemize}
-\item<1->
-    Java:
-    \begin{minted}{java}
-IntStream.range(0, 10)
-         .filter(x -> w%2 == 1)
-         .map(x -> x*x)
-    \end{minted}
-\item<2->
-    Python:
-    \begin{minted}{python}
-map(lambda x: x*x,
-    filter(lambda x: x%2 == 1,
-        range(10)
-    )
-)
-    \end{minted}
-\end{itemize}
-\end{frame}
+\subsubsection*{Definitionen}
 
 \begin{frame}{Ranges}
     \begin{center}
@@ -30,4 +10,27 @@ map(lambda x: x*x,
     \begin{center}
         A \emph{constrained algorithm} is an algorithm that takes ranges.
     \end{center}
+\end{frame}
+
+\subsubsection*{Ranges in anderen Programmiersprachen}
+
+\begin{frame}[fragile]{Ranges in anderen Programmiersprachen}
+    \begin{itemize}
+        \item<1->
+            Java:
+            \begin{minted}{java}
+    IntStream.range(0, 10)
+             .filter(x -> w%2 == 1)
+             .map(x -> x*x)
+        \end{minted}
+        \item<2->
+            Python:
+            \begin{minted}{python}
+    map(lambda x: x*x,
+        filter(lambda x: x%2 == 1,
+            range(10)
+        )
+    )
+        \end{minted}
+    \end{itemize}
 \end{frame}

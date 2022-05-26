@@ -1,18 +1,20 @@
+\subsubsection{Views}
+
 \begin{frame}{Views}
-\begin{itemize}
-    \item Lazy Evaluation
-    \item einfaches Hintereinanderreihen
-\end{itemize}
+    \begin{itemize}
+        \item Lazy Evaluation
+        \item einfaches Hintereinanderreihen
+    \end{itemize}
 \end{frame}
 
 \begin{frame}{Views - Beispiel}
-Aufgabe:
+    Aufgabe:
 
-Berechne für alle Pokémon des Typs Feuer den BMI.
+    Berechne für alle Pokémon des Typs Feuer den BMI.
 \end{frame}
 
 \begin{frame}[fragile]{Klassisch}
-\begin{minted}[fontsize=\footnotesize]{c++}
+    \begin{minted}[fontsize=\footnotesize]{c++}
 std::vector<int> bmis(const std::vector<Pokemon>& vec) {
     std::vector<int> bmis{};
     for (const Pokemon& p : vec) {
@@ -24,10 +26,10 @@ std::vector<int> bmis(const std::vector<Pokemon>& vec) {
     return bmis;
 }
 \end{minted}
-\end{frame} 
+\end{frame}
 
 \begin{frame}[fragile]{Mit Ranges}
-\begin{minted}[fontsize=\footnotesize]{c++}
+    \begin{minted}[fontsize=\footnotesize]{c++}
 auto bmis(const std::vector<Pokemon>& vec) {
     auto hat_typ_feuer = [](const Pokemon &p)
     { return p.typ == "Feuer"; };
