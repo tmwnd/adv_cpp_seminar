@@ -10,9 +10,8 @@
 \end{frame}
 
 \begin{frame}{Views - Beispiel}
-    Aufgabe:
-
-    Berechne für alle Pokémon des Typs Feuer den BMI.
+    \textbf{Aufgabe:}\\
+    Berechne für alle Pokémon des Typs Feuer den BMI\footnote{$bmi = \frac{gewicht}{groesse^2}$}.
 \end{frame}
 
 \begin{frame}[fragile]{Klassisch}
@@ -30,13 +29,18 @@ std::vector<int> bmis(const std::vector<Pokemon>& vec) {
 \end{minted}
 \end{frame}
 
+% TODO old stl
+
 \begin{frame}[fragile]{Mit Ranges}
     \begin{minted}[fontsize=\footnotesize]{c++}
 auto bmis(const std::vector<Pokemon>& vec) {
-    auto hat_typ_feuer = [](const Pokemon &p)
-    { return p.typ == "Feuer"; };
-    auto bmi = [](const Pokemon &p)
-    { return (p.gewicht / (p.groesse * p.groesse)); };
+    auto hat_typ_feuer = [](const Pokemon &p) {
+        return p.typ == "Feuer";
+    };
+    auto bmi = [](const Pokemon &p) {
+        return (p.gewicht / (p.groesse * p.groesse));
+    };
+    
     auto view = transform(filter(vec, hat_typ_feuer), bmi);
     return view;
 }
@@ -71,7 +75,7 @@ auto bmis(const std::vector<Pokemon>& vec) {
 
 \begin{frame}[fragile]{Dangling Iterator}
     \begin{overlayarea}{\linewidth}{3cm}
-    \begin{minted}[]{c++}
+        \begin{minted}[]{c++}
 using std::ranges;
 std::vector<Pokemon> get_pokemon();
 
@@ -82,12 +86,12 @@ auto it = min_element(
         );
 do_something(*it);
     \end{minted}
-\end{overlayarea}
+    \end{overlayarea}
 \end{frame}
 
 \begin{frame}[fragile]{Probleme}
     \begin{overlayarea}{\linewidth}{3cm}
-    \begin{minted}[]{c++}
+        \begin{minted}[]{c++}
 using std::ranges;
 std::vector<Pokemon> get_pokemon();
 
@@ -97,13 +101,13 @@ auto it = min_element(
         );
 do_something(*it);
     \end{minted}
-    \begin{onlyenv}<2->
-        \begin{minted}{c++}
+        \begin{onlyenv}<2->
+            \begin{minted}{c++}
 //error: no match for ‘operator*’
 //(operand type is ‘std::ranges::dangling’)
         \end{minted}
-    \end{onlyenv}
-\end{overlayarea}
+        \end{onlyenv}
+    \end{overlayarea}
 \end{frame}
 
 % \begin{frame}[fragile]{Probleme}
