@@ -1,3 +1,56 @@
-\begin{frame}{Zu lange Fehlermeldungen}
+\begin{frame}[fragile]{Zu lange Fehlermeldungen}
+
+\begin{center}
+\begin{tcolorbox}
+\begin{minted}{c++}
+std::list<int> list{3,1,4,1,5};
+std::sort(list.begin(), list.end());
+\end{minted}
+\end{tcolorbox}
+\end{center}
+\end{frame}
+
+\begin{frame}[fragile, allowframebreaks]{Zu lange Fehlermeldungen}
+Vorher:
+\begin{minted}[fontsize=\footnotesize, linenos]{console}
+In file included from error_messages.cpp:2:
+In file included from /usr/bin/../lib/gcc/x86_64-linux-gnu/11/../../../../include/c++/11/algorithm:62:
+/usr/bin/../lib/gcc/x86_64-linux-gnu/11/../../../../include/c++/11/bits/stl_algo.h:1955:22: error: invalid operands to binary expression ('std::_List_iterator<int>' and 'std::_List_iterator<int>')
+                                std::__lg(__last - __first) * 2,
+                                            ~~~~~~ ^ ~~~~~~~
+/usr/bin/../lib/gcc/x86_64-linux-gnu/11/../../../../include/c++/11/bits/stl_algo.h:4842:12: note: in instantiation of function template specialization 'std::__sort<std::_List_iterator<int>, __gnu_cxx::__ops::_Iter_less_iter>' requested here
+        std::__sort(__first, __last, __gnu_cxx::__ops::__iter_less_iter());
+            ^
+error_messages.cpp:8:10: note: in instantiation of function template specialization 'std::sort<std::_List_iterator<int>>' requested here
+    std::sort(list.begin(), list.end());
+            ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/11/../../../../include/c++/11/bits/stl_iterator.h:560:5: note: candidate template ignored: could not match 'reverse_iterator' against '_List_iterator'
+    operator-(const reverse_iterator<_IteratorL>& __x,
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/11/../../../../include/c++/11/bits/stl_iterator.h:1639:5: note: candidate template ignored: could not match 'move_iterator' against '_List_iterator'
+    operator-(const move_iterator<_IteratorL>& __x,
+    ^
+In file included from error_messages.cpp:2:
+In file included from /usr/bin/../lib/gcc/x86_64-linux-gnu/11/../../../../include/c++/11/algorithm:62:
+/usr/bin/../lib/gcc/x86_64-linux-gnu/11/../../../../include/c++/11/bits/stl_algo.h:1864:18: error: invalid operands to binary expression ('std::_List_iterator<int>' and 'std::_List_iterator<int>')
+        if (__last - __first > int(_S_threshold))
+            ~~~~~~ ^ ~~~~~~~
+/usr/bin/../lib/gcc/x86_64-linux-gnu/11/../../../../include/c++/11/bits/stl_algo.h:1957:9: note: in instantiation of function template specialization 'std::__final_insertion_sort<std::_List_iterator<int>, __gnu_cxx::__ops::_Iter_less_iter>' requested here
+            std::__final_insertion_sort(__first, __last, __comp);
+                ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/11/../../../../include/c++/11/bits/stl_algo.h:4842:12: note: in instantiation of function template specialization 'std::__sort<std::_List_iterator<int>, __gnu_cxx::__ops::_Iter_less_iter>' requested here
+        std::__sort(__first, __last, __gnu_cxx::__ops::__iter_less_iter());
+            ^
+error_messages.cpp:8:10: note: in instantiation of function template specialization 'std::sort<std::_List_iterator<int>>' requested here
+    std::sort(list.begin(), list.end());
+            ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/11/../../../../include/c++/11/bits/stl_iterator.h:560:5: note: candidate template ignored: could not match 'reverse_iterator' against '_List_iterator'
+    operator-(const reverse_iterator<_IteratorL>& __x,
+    ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/11/../../../../include/c++/11/bits/stl_iterator.h:1639:5: note: candidate template ignored: could not match 'move_iterator' against '_List_iterator'
+    operator-(const move_iterator<_IteratorL>& __x,
+    ^
+2 errors generated.
+\end{minted}
 
 \end{frame}

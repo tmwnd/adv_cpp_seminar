@@ -1,3 +1,21 @@
-\begin{frame}{Implementierung anderer Programmiersprachen}
-
+\begin{frame}[fragile]{Implementierung anderer Programmiersprachen}
+\frametitle{Ranges in anderen Programmiersprachen}
+\begin{itemize}
+\item<1->
+    Java:
+    \begin{minted}{java}
+IntStream.range(0, 10)
+         .filter(x -> w%2 == 1)
+         .map(x -> x*x)
+    \end{minted}
+\item<2->
+    Python:
+    \begin{minted}{python}
+map(lambda x: x*x,
+    filter(lambda x: x%2 == 1,
+        range(10)
+    )
+)
+    \end{minted}
+\end{itemize}
 \end{frame}

@@ -1,3 +1,114 @@
 \begin{frame}{Views}
+\begin{itemize}
+    \item Lazy Evaluation
+    \item einfaches Hintereinanderreihen
+\end{itemize}
+\end{frame}
 
+\begin{frame}{Views - Beispiel}
+Aufgabe:
+
+Berechne für alle Pokémon des Typs Feuer den BMI.
+\end{frame}
+
+\begin{frame}[fragile]{Klassisch}
+\begin{minted}[fontsize=\footnotesize]{c++}
+std::vector<int> bmis(const std::vector<Pokemon>& vec) {
+    std::vector<int> bmis{};
+    for (const Pokemon& p : vec) {
+        if (pokemon.type() == "Feuer") {
+            int bmi = p.gewicht() / (p.groesse() * p.groesse());
+            bmis.push_back(bmi);
+        }
+    }
+    return bmis;
+}
+\end{minted}
+\end{frame} 
+
+\begin{frame}[fragile]{Mit Ranges}
+\begin{minted}[fontsize=\footnotesize]{c++}
+auto bmis(const std::vector<Pokemon>& vec) {
+    auto hat_typ_feuer = [](const Pokemon &p)
+    { return p.typ == "Feuer"; };
+    auto bmi = [](const Pokemon &p)
+    { return (p.gewicht / (p.groesse * p.groesse)); };
+    auto view = transform(filter(vec, hat_typ_feuer), bmi);
+    return view;
+}
+\end{minted}
+\end{frame}
+
+\begin{frame}[fragile]{Mit Ranges und Pipes}
+    \begin{minted}[fontsize=\footnotesize]{c++}
+auto bmis(const std::vector<Pokemon>& vec) {
+    auto hat_typ_feuer = [](const Pokemon &p)
+    { return p.typ == "Feuer"; };
+    auto bmi = [](const Pokemon &p)
+    { return (p.gewicht / (p.groesse * p.groesse)); };
+    auto view = vec | filter(hat_typ_feuer) | transform(bmi);
+    return view;
+}
+\end{minted}
+\end{frame}
+
+\begin{frame}[fragile]{Mit Ranges und Pipes}
+    \begin{minted}[fontsize=\footnotesize]{c++}
+auto bmis(const std::vector<Pokemon>& vec) {
+    auto view = vec
+    | filter([](const Pokemon &p)
+    { return p.typ == "Feuer"; })
+    | transform([](const Pokemon &p)
+    { return (p.gewicht / (p.groesse * p.groesse)); });
+    return view;
+}
+\end{minted}
+\end{frame}
+
+
+
+\begin{frame}[fragile]{Probleme}
+    \begin{minted}[]{c++}
+using std::ranges;
+std::vector<Pokemon> get_pokemons();
+
+auto pokemons = get_pokemons();
+auto it = find(pokemons, 10, &Pokemon:groesse);
+do_something(*it);
+    \end{minted}
+\end{frame}
+
+\begin{frame}[fragile]{Probleme}
+    \begin{minted}[]{c++}
+using std::ranges;
+std::vector<Pokemon> get_pokemons();
+
+auto it = find(get_pokemons(), 10, &Pokemon:groesse);
+do_something(*it);
+    \end{minted}
+\end{frame}
+
+\begin{frame}[fragile]{Probleme}
+    \begin{minted}[]{c++}
+using std::ranges;
+std::vector<Pokemon> get_pokemons();
+
+auto it = find(get_pokemons(), 10, &Pokemon:groesse);
+do_something(*it);
+//error: no match for ‘operator*’
+//(operand type is ‘std::ranges::dangling’)
+    \end{minted}
+\end{frame}
+
+\begin{frame}[fragile]{Probleme 2}
+    \begin{minted}{c++}
+using std::ranges
+std::vector<Pokemon> get_pokemons();
+auto hat_typ_feuer = [](const Pokemon &p)
+    { return p.typ == "Feuer"; };
+
+auto pokemons = get_pokemons();
+auto view = views::filter(pokemons, hat_typ_feuer);
+copy(view, std::ostream_iterator<Pokemon>(std::cout, " "))
+    \end{minted}
 \end{frame}
