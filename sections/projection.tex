@@ -1,3 +1,5 @@
+\subsubsection{Projection}
+
 \begin{frame}{Projection}
     A \emph{projection} is a unary callable which may ne passed to most algorithms.
 
@@ -63,7 +65,7 @@ std::equal(
     pokemon.begin(), pokemon.end(),
     pokedex.begin(), pokedex.end(),
     [] (const Pokemon& p, const PokedexEintrag& e) {
-        return p.id == p.pokemon_id;
+        return p.id == e.pokemon_id;
     });
     \end{minted}
 \end{frame}
@@ -98,7 +100,7 @@ std::ranges::sort(pokedex,
     \begin{minted}{cpp}
 std::ranges::equal(pokemon, pokedex,
     [] (const Pokemon& p, const PokedexEintrag& e) {
-        return p.id == p.pokemon_id;
+        return p.id == e.pokemon_id;
     });
     \end{minted}
 \end{frame}
