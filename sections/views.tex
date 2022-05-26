@@ -2,8 +2,10 @@
 
 \begin{frame}{Views}
     \begin{itemize}
-        \item Lazy Evaluation
-        \item einfaches Hintereinanderreihen
+        \item<1-> Lazy Evaluation
+        \item<2-> einfaches Hintereinanderreihen
+        \item<3-> constant time copy and move
+        \item<4-> non-owning
     \end{itemize}
 \end{frame}
 
@@ -67,50 +69,87 @@ auto bmis(const std::vector<Pokemon>& vec) {
 \end{minted}
 \end{frame}
 
-
-
 \begin{frame}[fragile]{Probleme}
+    \begin{overlayarea}{\linewidth}{3cm}
     \begin{minted}[]{c++}
 using std::ranges;
-std::vector<Pokemon> get_pokemons();
+std::vector<Pokemon> get_pokemon();
 
-auto pokemons = get_pokemons();
-auto it = find(pokemons, 10, &Pokemon:groesse);
+auto pokemon = get_pokemon();
+auto it = min_element(
+        get_pokemon(), {},
+        &Pokemon:groesse
+        );
 do_something(*it);
     \end{minted}
+\end{overlayarea}
 \end{frame}
 
 \begin{frame}[fragile]{Probleme}
+    \begin{overlayarea}{\linewidth}{3cm}
     \begin{minted}[]{c++}
 using std::ranges;
-std::vector<Pokemon> get_pokemons();
+std::vector<Pokemon> get_pokemon();
 
-auto it = find(get_pokemons(), 10, &Pokemon:groesse);
+auto it = min_element(
+        get_pokemon(), {},
+        &Pokemon:groesse
+        );
 do_something(*it);
     \end{minted}
-\end{frame}
-
-\begin{frame}[fragile]{Probleme}
-    \begin{minted}[]{c++}
-using std::ranges;
-std::vector<Pokemon> get_pokemons();
-
-auto it = find(get_pokemons(), 10, &Pokemon:groesse);
-do_something(*it);
+    \begin{onlyenv}<2->
+        \begin{minted}{c++}
 //error: no match for ‘operator*’
 //(operand type is ‘std::ranges::dangling’)
-    \end{minted}
+        \end{minted}
+    \end{onlyenv}
+\end{overlayarea}
 \end{frame}
+
+% \begin{frame}[fragile]{Probleme}
+%     \begin{minted}[]{c++}
+% using std::ranges;
+% std::vector<Pokemon> get_pokemons();
+
+% auto it = find(get_pokemons(), 10, &Pokemon:groesse);
+% do_something(*it);
+% //error: no match for ‘operator*’
+% //(operand type is ‘std::ranges::dangling’)
+%     \end{minted}
+% \end{frame}
 
 \begin{frame}[fragile]{Probleme 2}
     \begin{minted}{c++}
 using std::ranges
-std::vector<Pokemon> get_pokemons();
+std::vector<Pokemon> get_pokemon();
+auto hat_typ_feuer = [](const Pokemon &p){ 
+        return p.typ == "Feuer"; };
+
+auto view = views::filter(get_pokemon(), hat_typ_feuer);
+for(const Pokemon& p : view) {
+    std::cout << p << std::endl;
+}
+//compiler error:
+//note: candidate: ‘template<class _Range, class _Pred>
+//requires (viewable_range<_Range>)
+    \end{minted}
+\end{frame}
+
+
+\begin{frame}[fragile]{Probleme 2}
+    \begin{minted}{c++}
+using std::ranges
+std::vector<Pokemon> get_pokemon();
 auto hat_typ_feuer = [](const Pokemon &p)
     { return p.typ == "Feuer"; };
+auto get_feuer_pokemon(const std::vector<Pokemon>& p) {
+    return p | views::filter(hat_typ_feuer);
+}
 
-auto pokemons = get_pokemons();
-auto view = views::filter(pokemons, hat_typ_feuer);
-copy(view, std::ostream_iterator<Pokemon>(std::cout, " "))
+auto view = get_feuer_pokemon(get_pokemon())
+for(const Pokemon& p : view) {
+    std::cout << p << std::endl;
+}
+//segfault
     \end{minted}
 \end{frame}

@@ -2,36 +2,36 @@
 
 \begin{frame}[fragile]{Range Concepts}
     \begin{itemize}
-        \item<1-> std::ranges::input\_range
-            \only<1->{\begin{itemize} \item std::cin \end{itemize}}
+        \item<1-> \mintinline{c++}{std::ranges::input_range}
+            \onslide<2->{\begin{itemize} \item \mintinline{c++}{std::cin} \end{itemize}}
             % \item<2-> std::ranges::forward\_range
             % \only<2->{\begin{itemize} \item std::forward\_list \end{itemize}}
-        \item<3-> std::ranges::bidirectional\_range
-            \only<3->{\begin{itemize} \item std::list \end{itemize}}
-        \item<4-> std::ranges::random\_access\_range
-            \only<4->{\begin{itemize} \item std::unordered\_map \end{itemize}}
+        \item<3-> \mintinline{c++}{std::ranges::bidirectional_range}
+            \onslide<4->{\begin{itemize} \item \mintinline{c++}{std::list} \end{itemize}}
+        \item<5-> \mintinline{c++}{std::random_access_range}
+            \onslide<6->{\begin{itemize} \item \mintinline{c++}{std::unordered_map} \end{itemize}}
             % \item<5-> std::ranges::contiguous\_range
             % \only<5->{\begin{itemize} \item std::vector \end{itemize}}
-        \item<5-> std::ranges::sized\_range
-            \only<5->{\begin{itemize} \item std::vector \end{itemize}}
+        \item<7-> \mintinline{c++}{std::ranges::sized_range}
+            \onslide<8->{\begin{itemize} \item \mintinline{c++}{std::vector} \end{itemize}}
     \end{itemize}
 \end{frame}
 
-\begin{frame}[fragile]{Bessere Fehlermeldungen}
-    \begin{minted}[fontsize=\tiny, linenos]{console}
-error_messages.cpp:8:5: error: no matching function for call to object of type 'const std::ranges::__sort_fn'
-    std::ranges::sort(list.begin(), list.end());
-    ^~~~~~~~~~~~~~~~~
-/usr/bin/../lib/gcc/x86_64-linux-gnu/11/../../../../include/c++/11/bits/ranges_algo.h:2025:7:
-note: candidate template ignored: constraints not satisfied [with _Iter = std::_List_iterator<int>, _Sent = std::_List_iterator<int>, _Comp = std::ranges::less, _Proj = std::identity]
-      operator()(_Iter __first, _Sent __last,
-      ^
-/usr/bin/../lib/gcc/x86_64-linux-gnu/11/../../../../include/c++/11/bits/ranges_algo.h:2021:14:
-note: because 'std::_List_iterator<int>' does not satisfy 'random_access_iterator'
-    template<random_access_iterator _Iter, sentinel_for<_Iter> _Sent,
-             ^
-[...]
-1 error generated.
+% \begin{frame}[fragile]{Bessere Fehlermeldungen}
+%     \begin{minted}[fontsize=\tiny, linenos]{console}
+% error_messages.cpp:8:5: error: no matching function for call to object of type 'const std::ranges::__sort_fn'
+%     std::ranges::sort(list.begin(), list.end());
+%     ^~~~~~~~~~~~~~~~~
+% /usr/bin/../lib/gcc/x86_64-linux-gnu/11/../../../../include/c++/11/bits/ranges_algo.h:2025:7:
+% note: candidate template ignored: constraints not satisfied [with _Iter = std::_List_iterator<int>, _Sent = std::_List_iterator<int>, _Comp = std::ranges::less, _Proj = std::identity]
+%       operator()(_Iter __first, _Sent __last,
+%       ^
+% /usr/bin/../lib/gcc/x86_64-linux-gnu/11/../../../../include/c++/11/bits/ranges_algo.h:2021:14:
+% note: because 'std::_List_iterator<int>' does not satisfy 'random_access_iterator'
+%     template<random_access_iterator _Iter, sentinel_for<_Iter> _Sent,
+%              ^
+% [...]
+% 1 error generated.
 
-\end{minted}
-\end{frame}
+% \end{minted}
+% \end{frame}
