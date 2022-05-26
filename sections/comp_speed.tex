@@ -12,7 +12,7 @@ std::find(
     \end{minted}
 \end{frame}
 
-\begin{frame}[fragile]{(Compiler-) Geschwindigkeitsoptimierung}
+\begin{frame}[fragile]{(Compiler-) Geschwindigkeitsoptimierung - Implementierung}
     \begin{minted}{cpp}
 std::vector<int>::iterator find(
     std::vector<int>::iterator first,
@@ -49,7 +49,7 @@ std::find(
     \end{minted}
 \end{frame}
 
-\begin{frame}[fragile]{(Compiler-) Geschwindigkeitsoptimierung}
+\begin{frame}[fragile]{(Compiler-) Geschwindigkeitsoptimierung - Implementierung}
     \begin{minted}{cpp}
 std::vector<int>::iterator find(
     std::vector<int>::iterator     first,
@@ -65,7 +65,7 @@ std::vector<int>::iterator find(
     \end{minted}
 \end{frame}
 
-\begin{frame}[fragile]{(Compiler-) Geschwindigkeitsoptimierung}
+\begin{frame}[fragile]{(Compiler-) Geschwindigkeitsoptimierung - Implementierung}
     \begin{minted}{cpp}
 std::vector<int>::iterator find(
     std::vector<int>::iterator     first,
@@ -91,4 +91,7 @@ std::vector<int>::iterator find(
     \vspace{2.5em}
 
     Durch Sentinals verringern wir diese Zugriffe um die Hälfte, haben jedoch Probleme, wenn \texttt{val} nicht im Vector enthalten ist.
+    \begin{itemize}
+        \item \mintinline{cpp}{*first == val}
+    \end{itemize}
 \end{frame}

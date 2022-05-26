@@ -17,3 +17,18 @@ std::ranges::find(v, 5);
 std::ranges::sort(v);
     \end{minted}
 \end{frame}
+
+\begin{frame}[fragile]{Unübersichtlicher Code - Implementierung}
+    \begin{enumerate}
+        \item<1-> \mintinline{cpp}{std::ranges::sort(v);}
+        \item<2-> \mintinline{cpp}{struct sort_fn {...}}
+        \item<3-> \begin{minted}{cpp}
+std::ranges::sort(
+    std::ranges::begin(v),
+    std::ranges::end(v)
+);
+            \end{minted}
+        \item<4-> \mintinline{cpp}{std::ranges::sort(v.begin(), v.end());}
+        \item<5-> \mintinline{cpp}{std::sort(v.begin(), v.end());}
+    \end{enumerate}
+\end{frame}
