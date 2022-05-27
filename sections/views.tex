@@ -1,21 +1,29 @@
 \subsubsection{Views}
 
 \begin{frame}{Views}
-    \begin{itemize}
-        \item<1-> Lazy Evaluation
-        \item<2-> einfaches Hintereinanderreihen
-        \item<3-> constant time copy and move
-        \item<4-> non-owning
-    \end{itemize}
+	\begin{itemize}
+        \item<1-> Views leben in \mintinline{c++}{std::ranges::views}
+        \item<2-> Es gibt den alias \mintinline{c++}{std::views}
+		\item<3-> Was kennzeichnet Views aus?
+		\begin{itemize}
+            \item<4-> lazy evaluation
+            \item<5-> besitzen Inhalt nicht, referenzieren nur
+            \item<6-> constant time copy and move
+            \item<7-> einfach und effizient kombinierbar
+        \end{itemize}
+	\end{itemize}
 \end{frame}
 
+
+%Bemerkung: using directives
+
 \begin{frame}{Views - Beispiel}
-    \textbf{Aufgabe:}\\
-    Berechne für alle Pokémon des Typs Feuer den BMI\footnote{$bmi = \frac{gewicht}{groesse^2}$}.
+	\textbf{Aufgabe:}\\
+	Berechne für alle Pokémon des Typs Feuer den BMI\footnote{$\text{bmi} = \frac{\text{gewicht}}{\text{groesse}^2}$}.
 \end{frame}
 
 \begin{frame}[fragile]{Klassisch}
-    \begin{minted}[fontsize=\footnotesize]{c++}
+	\begin{minted}[fontsize=\footnotesize]{c++}
 std::vector<int> bmis(const std::vector<Pokemon>& vec) {
     std::vector<int> bmis{};
     for (const Pokemon& p : vec) {
@@ -32,7 +40,7 @@ std::vector<int> bmis(const std::vector<Pokemon>& vec) {
 % TODO old stl
 
 \begin{frame}[fragile]{Mit Ranges}
-    \begin{minted}[fontsize=\footnotesize]{c++}
+	\begin{minted}[fontsize=\footnotesize]{c++}
 auto bmis(const std::vector<Pokemon>& vec) {
     auto hat_typ_feuer = [](const Pokemon &p) {
         return p.typ == "Feuer";
@@ -48,7 +56,7 @@ auto bmis(const std::vector<Pokemon>& vec) {
 \end{frame}
 
 \begin{frame}[fragile]{Mit Ranges und Pipes}
-    \begin{minted}[fontsize=\footnotesize]{c++}
+	\begin{minted}[fontsize=\footnotesize]{c++}
 auto bmis(const std::vector<Pokemon>& vec) {
     auto hat_typ_feuer = [](const Pokemon &p)
     { return p.typ == "Feuer"; };
@@ -61,7 +69,7 @@ auto bmis(const std::vector<Pokemon>& vec) {
 \end{frame}
 
 \begin{frame}[fragile]{Mit Ranges und Pipes}
-    \begin{minted}[fontsize=\footnotesize]{c++}
+	\begin{minted}[fontsize=\footnotesize]{c++}
 auto bmis(const std::vector<Pokemon>& vec) {
     auto view = vec
     | filter([](const Pokemon &p)
@@ -74,25 +82,23 @@ auto bmis(const std::vector<Pokemon>& vec) {
 \end{frame}
 
 \begin{frame}[fragile]{Dangling Iterator}
-    \begin{overlayarea}{\linewidth}{3cm}
-        \begin{minted}[]{c++}
-using std::ranges;
+	\begin{overlayarea}{\linewidth}{3cm}
+		\begin{minted}[]{c++}
 std::vector<Pokemon> get_pokemon();
 
 auto pokemon = get_pokemon();
 auto it = min_element(
-        get_pokemon(), {},
+        pokemon, {},
         &Pokemon:groesse
         );
 do_something(*it);
     \end{minted}
-    \end{overlayarea}
+	\end{overlayarea}
 \end{frame}
 
-\begin{frame}[fragile]{Probleme}
-    \begin{overlayarea}{\linewidth}{3cm}
-        \begin{minted}[]{c++}
-using std::ranges;
+\begin{frame}[fragile]{Dangling Iterator}
+	\begin{overlayarea}{\linewidth}{3cm}
+		\begin{minted}[]{c++}
 std::vector<Pokemon> get_pokemon();
 
 auto it = min_element(
@@ -101,13 +107,13 @@ auto it = min_element(
         );
 do_something(*it);
     \end{minted}
-        \begin{onlyenv}<2->
-            \begin{minted}{c++}
+		\begin{onlyenv}<2->
+			\begin{minted}{c++}
 //error: no match for ‘operator*’
 //(operand type is ‘std::ranges::dangling’)
         \end{minted}
-        \end{onlyenv}
-    \end{overlayarea}
+		\end{onlyenv}
+	\end{overlayarea}
 \end{frame}
 
 % \begin{frame}[fragile]{Probleme}
@@ -122,9 +128,9 @@ do_something(*it);
 %     \end{minted}
 % \end{frame}
 
-\begin{frame}[fragile]{Probleme 2}
-    \begin{minted}{c++}
-using std::ranges
+\begin{frame}[fragile]{Dangling View}
+	\begin{overlayarea}{\linewidth}{5cm}
+		\begin{minted}{c++}
 std::vector<Pokemon> get_pokemon();
 auto hat_typ_feuer = [](const Pokemon &p){ 
         return p.typ == "Feuer"; };
@@ -133,16 +139,21 @@ auto view = views::filter(get_pokemon(), hat_typ_feuer);
 for(const Pokemon& p : view) {
     std::cout << p << std::endl;
 }
+    \end{minted}
+		\begin{onlyenv}<2->
+			\begin{minted}{c++}
 //compiler error:
 //note: candidate: ‘template<class _Range, class _Pred>
 //requires (viewable_range<_Range>)
-    \end{minted}
+        \end{minted}
+		\end{onlyenv}
+	\end{overlayarea}
+
 \end{frame}
 
 
-\begin{frame}[fragile]{Probleme 2}
-    \begin{minted}{c++}
-using std::ranges
+\begin{frame}[fragile]{Dangling View}
+	\begin{minted}{c++}
 std::vector<Pokemon> get_pokemon();
 auto hat_typ_feuer = [](const Pokemon &p)
     { return p.typ == "Feuer"; };
@@ -156,4 +167,60 @@ for(const Pokemon& p : view) {
 }
 //segfault
     \end{minted}
+\end{frame}
+
+%wann dangling view sinnvoll?
+
+\begin{frame}[fragile]{Dangling View}
+    \begin{minted}{c++}
+std::string s{" Das Ist Ein Langer String. "};
+auto s_view(const std::string& s) {
+    [...]
+    return std::string_view{s};
+}
+std::string_view = s_view(s);
+auto view = sv
+            | filter([](char c) { return c!= ' '; });
+for (char c : view) {
+    std::cout << c;
+} //"DasIstEinLangerString"
+    \end{minted}
+\end{frame}
+
+\begin{frame}[fragile]{Dangling View}
+    \begin{minted}{c++}
+std::string s{" Das Ist Ein Langer String. "};
+auto s_view(const std::string& s) {
+    [...]
+    return std::string_view{s};
+}
+auto view = s_view(s)
+            | filter([](char c) { return c!= ' '; });
+for (char c : view) {
+    std::cout << c;
+} //"DasIstEinLangerString"
+    \end{minted}
+\end{frame}
+
+\begin{frame}{\mintinline{c++}{std::ranges::viewable_range}}
+\begin{center}
+\textbf{Was kann man einem Range adaptor alles übergeben?}
+\end{center}
+\end{frame}
+
+\begin{frame}{\mintinline{c++}{std::ranges::viewable_range}}
+
+    \textbf{Alles was eine \mintinline{c++}{std::ranges::viewable_range} ist!}
+
+    \begin{itemize}
+        \item<2-> lvalue reference (alles mit einem Namen)
+        \item<3-> \mintinline{c++}{std::borrowed_range}
+        \begin{itemize}
+            \item<4-> Alle views
+            \item<5-> Typen mit \mintinline{c++}{std::enable_borrowed_range<T>} true
+            \begin{itemize}
+                \item<6-> \mintinline{c++}{std::span, std::string_view}
+            \end{itemize}
+        \end{itemize}
+    \end{itemize}
 \end{frame}
