@@ -149,6 +149,29 @@ auto hat_typ_feuer = [](const Pokemon &p) {
     return p.typ == "Feuer";
 };
 
+auto pokemon = get_pokemon();
+auto view = views::filter(pokemon, hat_typ_feuer);
+for(const Pokemon& p : view) {
+    std::cout << p << std::endl;
+}
+    \end{minted}
+        \begin{onlyenv}<-0>
+            \begin{minted}{c++}
+//note: candidate: ‘template<class _Range, class _Pred>
+//requires (viewable_range<_Range>)
+            \end{minted}
+        \end{onlyenv}
+    \end{overlayarea}
+\end{frame}
+
+\begin{frame}[fragile]{Dangling View}
+    \begin{overlayarea}{\linewidth}{6cm}
+        \begin{minted}{c++}
+std::vector<Pokemon> get_pokemon();
+auto hat_typ_feuer = [](const Pokemon &p) { 
+    return p.typ == "Feuer";
+};
+
 auto view = views::filter(get_pokemon(), hat_typ_feuer);
 for(const Pokemon& p : view) {
     std::cout << p << std::endl;
@@ -161,7 +184,6 @@ for(const Pokemon& p : view) {
             \end{minted}
         \end{onlyenv}
     \end{overlayarea}
-
 \end{frame}
 
 
