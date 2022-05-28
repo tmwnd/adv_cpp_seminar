@@ -29,74 +29,89 @@
 
 \begin{frame}[fragile]{Klassisch}
     \begin{minted}[fontsize=\footnotesize]{c++}
-std::vector<int> bmis(const std::vector<Pokemon>& vec) {
-    std::vector<int> bmis{};
-    for (const Pokemon& p : vec) {
-        if (pokemon.type() == "Feuer") {
-            int bmi = p.gewicht() / (p.groesse() ** 2);
-            bmis.push_back(bmi);
-        }
-    }
+std::vector<Pokemon> get_pokemon() {...};
+auto pokemon = get_pokemon();
+std::vector<int> bmis{};
 
-    return bmis;
+for (const Pokemon& p : vec) {
+    if (pokemon.type() == "Feuer") {
+        int bmi = p.gewicht() / (p.groesse() ** 2);
+        bmis.push_back(bmi);
+    }
 }
     \end{minted}
 \end{frame}
 
 % TODO old stl
 
+\begin{frame}[fragile]{alte STL}
+    \begin{minted}{c++}
+std::vector<Pokemon> get_pokemon() {...};
+auto pokemon = get_pokemon();
+std::vector<double> bmis;
+
+std::copy_if(
+    pokemon.begin(), pokemon.end(),
+    std::back_inserter(feuer_pokemon),
+    hat_typ_feuer_lambda);
+std::transform(
+    feuer_pokemon.begin(), feuer_pokemon.end(),
+    std::back_inserter(bmi),
+    bmi_lambda);
+    \end{minted}
+\end{frame}
+
 \begin{frame}[fragile]{Mit Ranges}
     \begin{minted}[fontsize=\footnotesize]{c++}
-auto bmis(const std::vector<Pokemon>& vec) {
-    auto hat_typ_feuer = [](const Pokemon &p) {
-        return p.typ == "Feuer";
-    };
-    auto bmi = [](const Pokemon &p) {
-        return (p.gewicht / (p.groesse ** 2));
-    };
-    
-    auto view = transform(filter(vec, hat_typ_feuer), bmi);
-    return view;
-}
+std::vector<Pokemon> get_pokemon() {...};
+auto pokemon = get_pokemon();
+auto hat_typ_feuer = [](const Pokemon &p) {
+    return p.typ == "Feuer";
+};
+auto bmi = [](const Pokemon &p) {
+    return (p.gewicht / (p.groesse ** 2));
+};
+
+auto view = transform(filter(vec, hat_typ_feuer), bmi);
+
 \end{minted}
 \end{frame}
 
 \begin{frame}[fragile]{Mit Ranges und Pipes}
     \begin{minted}[fontsize=\footnotesize]{c++}
-auto bmis(const std::vector<Pokemon>& vec) {
-    auto hat_typ_feuer = [](const Pokemon &p) {
-        return p.typ == "Feuer";
-    };
-    auto bmi = [](const Pokemon &p) {
-        return (p.gewicht / (p.groesse ** 2));
-    };
+std::vector<Pokemon> get_pokemon() {...};
+auto pokemon = get_pokemon();
+auto hat_typ_feuer = [](const Pokemon &p) {
+    return p.typ == "Feuer";
+};
+auto bmi = [](const Pokemon &p) {
+    return (p.gewicht / (p.groesse ** 2));
+};
 
-    auto view = vec | filter(hat_typ_feuer) | transform(bmi);
-    return view;
-}
+auto view = vec | filter(hat_typ_feuer) | transform(bmi);
+
     \end{minted}
 \end{frame}
 
 \begin{frame}[fragile]{Mit Ranges und Pipes}
     \begin{minted}[fontsize=\footnotesize]{c++}
-auto bmis(const std::vector<Pokemon>& vec) {
-    auto view = vec
-    | filter([](const Pokemon &p) {
-        return p.typ == "Feuer";
-    })
-    | transform([](const Pokemon &p) {
-        return (p.gewicht / (p.groesse ** 2));
-    });
+std::vector<Pokemon> get_pokemon() {...};
+auto pokemon = get_pokemon();
+auto view = vec
+| filter([](const Pokemon &p) {
+    return p.typ == "Feuer";
+})
+| transform([](const Pokemon &p) {
+    return (p.gewicht / (p.groesse ** 2));
+});
 
-    return view;
-}
     \end{minted}
 \end{frame}
 
 \begin{frame}[fragile]{Dangling Iterator}
     \begin{overlayarea}{\linewidth}{6cm}
         \begin{minted}[]{c++}
-std::vector<Pokemon> get_pokemon();
+std::vector<Pokemon> get_pokemon() {...};
 
 auto pokemon = get_pokemon();
 auto it = min_element(
@@ -112,7 +127,7 @@ std::cout << *it << std::enl;
 \begin{frame}[fragile]{Dangling Iterator}
     \begin{overlayarea}{\linewidth}{6cm}
         \begin{minted}[]{c++}
-std::vector<Pokemon> get_pokemon();
+std::vector<Pokemon> get_pokemon() {...};
 
 auto it = min_element(
     get_pokemon(), {},
@@ -144,7 +159,7 @@ std::cout << *it << std::enl;
 \begin{frame}[fragile]{Dangling View}
     \begin{overlayarea}{\linewidth}{6cm}
         \begin{minted}{c++}
-std::vector<Pokemon> get_pokemon();
+std::vector<Pokemon> get_pokemon() {...};
 auto hat_typ_feuer = [](const Pokemon &p) { 
     return p.typ == "Feuer";
 };
@@ -167,7 +182,7 @@ for(const Pokemon& p : view) {
 \begin{frame}[fragile]{Dangling View}
     \begin{overlayarea}{\linewidth}{6cm}
         \begin{minted}{c++}
-std::vector<Pokemon> get_pokemon();
+std::vector<Pokemon> get_pokemon() {...};
 auto hat_typ_feuer = [](const Pokemon &p) { 
     return p.typ == "Feuer";
 };
@@ -190,7 +205,7 @@ for(const Pokemon& p : view) {
 \begin{frame}[fragile]{Dangling View}
     \begin{overlayarea}{\linewidth}{6cm}
         \begin{minted}{c++}
-std::vector<Pokemon> get_pokemon();
+std::vector<Pokemon> get_pokemon() {...};
 auto hat_typ_feuer = [](const Pokemon &p) {
     return p.typ == "Feuer";
 };
