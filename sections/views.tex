@@ -34,8 +34,8 @@ auto pokemon = get_pokemon();
 std::vector<int> bmis{};
 
 for (const Pokemon& p : vec) {
-    if (pokemon.type() == "Feuer") {
-        int bmi = p.gewicht() / (p.groesse() ** 2);
+    if (p.primaer_typ == "Feuer" || p.sekundaer_typ = "Feuer") {
+        int bmi = p.gewicht() / (p.groesse() * p.groesse());
         bmis.push_back(bmi);
     }
 }
@@ -66,10 +66,10 @@ std::transform(
 std::vector<Pokemon> get_pokemon() {...};
 auto pokemon = get_pokemon();
 auto hat_typ_feuer = [](const Pokemon &p) {
-    return p.typ == "Feuer";
+    return p.primaer_typ == "Feuer" || p.sekundaer_typ = "Feuer";
 };
 auto bmi = [](const Pokemon &p) {
-    return (p.gewicht / (p.groesse ** 2));
+    return (p.gewicht / (p.groesse * p.groesse()));
 };
 
 auto view = transform(filter(vec, hat_typ_feuer), bmi);
@@ -82,10 +82,10 @@ auto view = transform(filter(vec, hat_typ_feuer), bmi);
 std::vector<Pokemon> get_pokemon() {...};
 auto pokemon = get_pokemon();
 auto hat_typ_feuer = [](const Pokemon &p) {
-    return p.typ == "Feuer";
+    return p.primaer_typ == "Feuer" || p.sekundaer_typ = "Feuer";
 };
 auto bmi = [](const Pokemon &p) {
-    return (p.gewicht / (p.groesse ** 2));
+    return (p.gewicht / (p.groesse * p.groesse()));
 };
 
 auto view = vec | filter(hat_typ_feuer) | transform(bmi);
@@ -99,10 +99,10 @@ std::vector<Pokemon> get_pokemon() {...};
 auto pokemon = get_pokemon();
 auto view = vec
 | filter([](const Pokemon &p) {
-    return p.typ == "Feuer";
+    return p.primaer_typ == "Feuer" || p.sekundaer_typ = "Feuer";
 })
 | transform([](const Pokemon &p) {
-    return (p.gewicht / (p.groesse ** 2));
+    return (p.gewicht / (p.groesse * p.groesse()));
 });
 
     \end{minted}
@@ -161,7 +161,7 @@ std::cout << *it << std::enl;
         \begin{minted}{c++}
 std::vector<Pokemon> get_pokemon() {...};
 auto hat_typ_feuer = [](const Pokemon &p) { 
-    return p.typ == "Feuer";
+    return p.primaer_typ == "Feuer" || p.sekundaer_typ = "Feuer";
 };
 
 auto pokemon = get_pokemon();
@@ -184,13 +184,13 @@ for(const Pokemon& p : view) {
         \begin{minted}{c++}
 std::vector<Pokemon> get_pokemon() {...};
 auto hat_typ_feuer = [](const Pokemon &p) { 
-    return p.typ == "Feuer";
+    return p.primaer_typ == "Feuer"
+        || p.sekundaer_typ = "Feuer";
 };
 
 auto view = views::filter(get_pokemon(), hat_typ_feuer);
-for(const Pokemon& p : view) {
+for(const Pokemon& p : view)
     std::cout << p << std::endl;
-}
     \end{minted}
         \begin{onlyenv}<2->
             \begin{minted}{c++}
@@ -207,16 +207,16 @@ for(const Pokemon& p : view) {
         \begin{minted}{c++}
 std::vector<Pokemon> get_pokemon() {...};
 auto hat_typ_feuer = [](const Pokemon &p) {
-    return p.typ == "Feuer";
+    return p.primaer_typ == "Feuer"
+        || p.sekundaer_typ = "Feuer";
 };
 auto get_feuer_pokemon(const std::vector<Pokemon>& p) {
     return p | views::filter(hat_typ_feuer);
 }
     
 auto view = get_feuer_pokemon(get_pokemon())
-for(const Pokemon& p : view) {
+for(const Pokemon& p : view)
     std::cout << p << std::endl;
-}
         \end{minted}
         \begin{onlyenv}<2->
             \begin{minted}{c++}

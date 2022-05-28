@@ -36,11 +36,11 @@ std::vector<PokedexEintrag> pokedex;
         \textbf{Erster Ansatz:}
     \end{center}
     \begin{enumerate}
-        \item Sortiere alle Pokemon (nach \texttt{id})
-        \item Sortiere alle PokedexEinträge (nach \texttt{pokemon\_id})
-        \item Gehe von oben alle Einträge durch.
-              Sobald die eine Liste die andere \enquote{überholt}, gib \texttt{false} zurück.
-        \item Wenn wir am Ende der Listen sind, gib \texttt{true} zurück
+        \item<1-> Sortiere alle Pokemon (nach \texttt{id})
+        \item<2-> Sortiere alle PokedexEinträge (nach \texttt{pokemon\_id})
+        \item<3-> Gehe von oben alle Einträge durch.
+            Sobald die eine Liste die andere \enquote{überholt}, gib \texttt{false} zurück.
+        \item<4-> Wenn wir am Ende der Listen sind, gib \texttt{true} zurück
     \end{enumerate}
 \end{frame}
 
@@ -77,7 +77,10 @@ std::equal(
 
     \begin{itemize}
         \item Erweitere Iteratoren durch Ranges
-        \item Ersetze \texttt{.begin()} bzw. \texttt{.end()}
+
+              \begin{itemize}
+                  \item Ersetze \texttt{.begin()} bzw. \texttt{.end()}
+              \end{itemize}
     \end{itemize}
 \end{frame}
 
@@ -112,9 +115,12 @@ std::ranges::equal(pokemon, pokedex,
 
     \begin{itemize}
         \item Erweitere Ranges durch Projection
-        \item Reduziere jedes Pokemon auf einen \texttt{int}
-        \item Reduziere analog jeden PokedexEintrag auf einen \texttt{int}
-        \item Überlasse dem Compiler den Umgang mit diesen primitiven Datentypen
+
+              \begin{itemize}
+                  \item Reduziere jedes Pokemon auf einen \texttt{int}
+                  \item Reduziere analog jeden PokedexEintrag auf einen \texttt{int}
+                  \item Überlasse dem Compiler den Umgang mit diesen primitiven Datentypen
+              \end{itemize}
     \end{itemize}
 \end{frame}
 
@@ -178,6 +184,8 @@ std::ranges::equal(pokemon, pokedex, {},
 \end{frame}
 
 \begin{frame}[fragile]{Projection - Beispiel}
+    Zusammengefasst:
+
     \begin{minted}{cpp}
 // stl
 std::sort(pokemon.begin(), pokemon.end(),
