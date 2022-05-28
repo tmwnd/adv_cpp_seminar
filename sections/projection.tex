@@ -176,3 +176,16 @@ std::ranges::equal(pokemon, pokedex, {},
     &Pokemon::id, &PokedexEintrag::pokemon_id);
     \end{minted}
 \end{frame}
+
+\begin{frame}[fragile]{Projection - Beispiel}
+    \begin{minted}{cpp}
+// stl
+std::sort(pokemon.begin(), pokemon.end(),
+    [] (const Pokemon& p1, const Pokemon& p2) {
+        return p1.id <= p2.id;
+    });
+
+// ranges
+std::ranges::sort(pokemon, {}, &Pokemon::id);
+    \end{minted}
+\end{frame}

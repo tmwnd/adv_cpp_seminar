@@ -3,14 +3,35 @@
 \begin{frame}[fragile]{Schlechte Fehlermeldungen}
 
     \begin{minted}{c++}
-std::list<int> list{ 3, 1, 4, 1, 5 };
+std::list<int> list{ 3, 1, 4, 1, 5, ... };
 std::sort(list.begin(), list.end());
     \end{minted}
 \end{frame}
 
+\begin{frame}[fragile]{Zu lange Fehlermeldungen}
+    \begin{minted}[fontsize=\footnotesize]{console}
+In file included from error_messages.cpp:2:
+In file included from /usr/bin/../lib/gcc/x86_64-linux-gnu/11/../../../../include/c++/11/algorithm:62:
+/usr/bin/../lib/gcc/x86_64-linux-gnu/11/../../../../include/c++/11/bits/stl_algo.h:1955:22:
+error: invalid operands to binary expression ('std::_List_iterator<int>' and 'std::_List_iterator<int>')
+                                  std::__lg(__last - __first) * 2,
+                                            ~~~~~~ ^ ~~~~~~~
+/usr/bin/../lib/gcc/x86_64-linux-gnu/11/../../../../include/c++/11/bits/stl_algo.h:4842:12: note: in instantiation of function template specialization 'std::__sort<std::_List_iterator<int>, __gnu_cxx::__ops::_Iter_less_iter>' requested here
+        std::__sort(__first, __last, __gnu_cxx::__ops::__iter_less_iter());
+            ^
+error_messages.cpp:8:10: note: in instantiation of function template specialization 'std::sort<std::_List_iterator<int>>' requested here
+    std::sort(list.begin(), list.end());
+            ^
+
+/usr/bin/../lib/gcc/x86_64-linux-gnu/11/../../../../include/c++/11/bits/stl_iterator.h:1639:5: note: candidate template ignored: could not match 'move_iterator' against '_List_iterator'
+    operator-(const move_iterator<_IteratorL>& __x,
+    ^
+    \end{minted}
+\end{frame}
+
 \setlength{\fboxsep}{0.1pt}
-\begin{frame}[fragile, allowframebreaks]{Zu lange Fehlermeldungen}
-    \begin{minted}[fontsize=\footnotesize, linenos, escapeinside=||]{console}
+\begin{frame}[fragile]{Zu lange Fehlermeldungen}
+    \begin{minted}[fontsize=\footnotesize, escapeinside=||]{console}
 In file included from error_messages.cpp:2:
 In file included from /usr/bin/../lib/gcc/x86_64-linux-gnu/11/../../../../include/c++/11/algorithm:62:
 /usr/bin/../lib/gcc/x86_64-linux-gnu/11/../../../../include/c++/11/bits/stl_algo.h:1955:22:
@@ -27,6 +48,11 @@ error_messages.cpp:8:10: note: in instantiation of function template specializat
 /usr/bin/../lib/gcc/x86_64-linux-gnu/11/../../../../include/c++/11/bits/stl_iterator.h:1639:5: note: candidate template ignored: could not match 'move_iterator' against '_List_iterator'
     operator-(const move_iterator<_IteratorL>& __x,
     ^
+    \end{minted}
+\end{frame}
+
+\begin{frame}[fragile]{Zu lange Fehlermeldungen}
+    \begin{minted}[fontsize=\footnotesize, escapeinside=||]{console}
 In file included from error_messages.cpp:2:
 In file included from /usr/bin/../lib/gcc/x86_64-linux-gnu/11/../../../../include/c++/11/algorithm:62:
 /usr/bin/../lib/gcc/x86_64-linux-gnu/11/../../../../include/c++/11/bits/stl_algo.h:1864:18: error: invalid operands to binary expression ('std::_List_iterator<int>' and 'std::_List_iterator<int>')
@@ -41,27 +67,49 @@ In file included from /usr/bin/../lib/gcc/x86_64-linux-gnu/11/../../../../includ
 error_messages.cpp:8:10: note: in instantiation of function template specialization 'std::sort<std::_List_iterator<int>>' requested here
     std::sort(list.begin(), list.end());
             ^
+    \end{minted}
+\end{frame}
+
+\begin{frame}[fragile]{Zu lange Fehlermeldungen}
+    \begin{minted}[fontsize=\footnotesize, escapeinside=||]{console}
 /usr/bin/../lib/gcc/x86_64-linux-gnu/11/../../../../include/c++/11/bits/stl_iterator.h:560:5: note: candidate template ignored: could not match 'reverse_iterator' against '_List_iterator'
     operator-(const reverse_iterator<_IteratorL>& __x,
     ^
 /usr/bin/../lib/gcc/x86_64-linux-gnu/11/../../../../include/c++/11/bits/stl_iterator.h:1639:5: note: candidate template ignored: could not match 'move_iterator' against '_List_iterator'
     operator-(const move_iterator<_IteratorL>& __x,
     ^
-2 errors generated.\end{minted}
-
+2 errors generated.
+    \end{minted}
 \end{frame}
 
 \begin{frame}[fragile]{Bessere Fehlermeldungen}
-
     \begin{minted}{c++}
-std::list<int> list{ 3, 1, 4, 1, 5 };
+std::list<int> list{ 3, 1, 4, 1, 5, ... };
 std::ranges::sort(list.begin(), list.end());
     \end{minted}
 \end{frame}
 
 \begin{frame}[fragile]{Bessere Fehlermeldungen}
+    \begin{minted}[fontsize=\footnotesize]{console}
+error_messages.cpp:8:5:
+error: no matching function for call
+to object of type 'const std::ranges::__sort_fn'
+    std::ranges::sort(list.begin(), list.end());
+    ^~~~~~~~~~~~~~~~~
+/usr/bin/../lib/gcc/x86_64-linux-gnu/11/../../../../include/c++/11/bits/ranges_algo.h:2025:7: note: candidate template ignored: constraints not satisfied [with _Iter = std::_List_iterator<int>, _Sent = std::_List_iterator<int>, _Comp = std::ranges::less, _Proj = std::identity]
+      operator()(_Iter __first, _Sent __last,
+      ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/11/../../../../include/c++/11/bits/ranges_algo.h:2021:14:
+note: because 'std::_List_iterator<int>' does not satisfy
+'random_access_iterator'
+    template<random_access_iterator _Iter, sentinel_for<_Iter> _Sent,
+             ^
+[...]
+    \end{minted}
+\end{frame}
 
-    \begin{minted}[fontsize=\footnotesize, linenos, escapeinside=||]{console}
+\begin{frame}[fragile]{Bessere Fehlermeldungen}
+    \begin{minted}[fontsize=\footnotesize, escapeinside=||]{console}
 error_messages.cpp:8:5:
 |\colorbox{red!30!white}{error: no matching function for call}|
 to object of type 'const std::ranges::__sort_fn'
