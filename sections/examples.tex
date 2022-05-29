@@ -44,20 +44,22 @@ std::map<int, Entwicklung> get_entwicklung();
     \textbf{Aufgabe:}\\
     Überführen Sie die gegebenen STL Algorithmen in Ranges
 
+    \vspace{1.5em}
+
     \begin{enumerate} %[label=\alph*)]
-        \item[a)] Kopieren Sie alle Starter Pokemon (inkl. Entwicklungen) in einen neuen Vector
-        \item[b)] Sortieren Sie diese nun nach Typ
-        \item[c)] Finden Sie in dem Vector nun das beste Pokemon
-        \item[d)] Zuletzt geben Sie das Pokemon mit der kleinsten und größten ID aus
+        \item[a)]<2-> Kopieren Sie alle Starter Pokemon (inkl. Entwicklungen) in einen neuen Vector
+        \item[b)]<3-> Sortieren Sie diese nun nach Typ
+        \item[c)]<4-> Finden Sie in dem Vector nun das \enquote{beste} Pokemon
+        \item[d)]<5-> Zuletzt geben Sie das Pokemon mit der kleinsten und größten ID aus
     \end{enumerate}
 \end{frame}
 
 \begin{frame}{pokemon\_ranges\_q.cpp}
     \textbf{Zusatzaufgaben:}\\
-    \begin{enumerate} %[label=\alph*)]
-        \item[\✨)] Kann man irgendwo projections benutzen?
-        \item[\✨)] Kann man überall projection benutzen?
-        \item[\✨)] Wie sieht es mit der performance aus?
+    \begin{enumerate} %[label=\✨)]
+        \item[\✨)]<2-> Kann man irgendwo projections benutzen?
+        \item[\✨)]<3-> Kann man überall projection benutzen?
+        \item[\✨)]<4-> Wie sieht es mit der performance aus?
     \end{enumerate}
 \end{frame}
 
@@ -97,16 +99,18 @@ auto find_best = [](const Pokemon& p) {
     \textbf{Aufgabe:}\\
     Erstellen Sie nun eine View, welche alle gegebenen Pokemon eine Entwicklung \enquote{nach vorne} bewegt
 
-    \begin{enumerate} %[label=\alph*)]
-        \item[a)] Erstellen Sie ein data\_member Struct in der View
-        \item[b)] Erstellen Sie die jeweiligen Operatoren für:
+    \vspace{1.5em}
 
-            \begin{itemize}
-                \item die View
-                \item die fn
-            \end{itemize}
-        \item[c)] Füllen Sie die Methoden begin() und end()
-        \item[d)] Nutzen Sie die View mithilfe von Pipes
+    \begin{enumerate} %[label=\alph*)]
+        \item[a)]<2-> Erstellen Sie ein data\_member Struct in der View
+        \item[b)]<3-> Erstellen Sie die jeweiligen Operatoren für:
+
+        \begin{itemize}
+            \item die View
+            \item die fn
+        \end{itemize}
+        \item[c)]<4-> Füllen Sie die Methoden begin() und end()
+        \item[d)]<5-> Nutzen Sie die View mithilfe von Pipes
     \end{enumerate}
 \end{frame}
 
