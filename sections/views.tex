@@ -35,41 +35,52 @@ std::vector<int> bmis{};
 
 for (const Pokemon& p : vec) {
     if (p.primaer_typ == "Feuer" || p.sekundaer_typ = "Feuer") {
-        int bmi = p.gewicht() / (p.groesse() * p.groesse());
+        int bmi = p.gewicht() / (p.groesse * p.groesse);
         bmis.push_back(bmi);
     }
 }
     \end{minted}
 \end{frame}
 
-% TODO old stl
-
 \begin{frame}[fragile]{alte STL}
     \begin{minted}{c++}
 std::vector<Pokemon> get_pokemon() {...};
 auto pokemon = get_pokemon();
 std::vector<double> bmis;
+auto hat_typ_feuer = [](const Pokemon &p) {
+    return p.primaer_typ == "Feuer"
+        || p.sekundaer_typ = "Feuer";
+};
+auto bmi = [](const Pokemon &p) {
+    return (p.gewicht / (p.groesse * p.groesse));
+};
 
+    \end{minted}
+\end{frame}
+
+\begin{frame}[fragile]{alte STL}
+    \begin{minted}{c++}
 std::copy_if(
     pokemon.begin(), pokemon.end(),
     std::back_inserter(feuer_pokemon),
-    hat_typ_feuer_lambda);
+    hat_typ_feuer);
 std::transform(
     feuer_pokemon.begin(), feuer_pokemon.end(),
     std::back_inserter(bmi),
-    bmi_lambda);
+    bmi);
     \end{minted}
 \end{frame}
 
 \begin{frame}[fragile]{Mit Ranges}
-    \begin{minted}[fontsize=\footnotesize]{c++}
+    \begin{minted}{c++}
 std::vector<Pokemon> get_pokemon() {...};
 auto pokemon = get_pokemon();
 auto hat_typ_feuer = [](const Pokemon &p) {
-    return p.primaer_typ == "Feuer" || p.sekundaer_typ = "Feuer";
+    return p.primaer_typ == "Feuer"
+        || p.sekundaer_typ = "Feuer";
 };
 auto bmi = [](const Pokemon &p) {
-    return (p.gewicht / (p.groesse * p.groesse()));
+    return (p.gewicht / (p.groesse * p.groesse));
 };
 
 auto view = transform(filter(vec, hat_typ_feuer), bmi);
@@ -78,14 +89,15 @@ auto view = transform(filter(vec, hat_typ_feuer), bmi);
 \end{frame}
 
 \begin{frame}[fragile]{Mit Ranges und Pipes}
-    \begin{minted}[fontsize=\footnotesize]{c++}
+    \begin{minted}{c++}
 std::vector<Pokemon> get_pokemon() {...};
 auto pokemon = get_pokemon();
 auto hat_typ_feuer = [](const Pokemon &p) {
-    return p.primaer_typ == "Feuer" || p.sekundaer_typ = "Feuer";
+    return p.primaer_typ == "Feuer"
+        || p.sekundaer_typ = "Feuer";
 };
 auto bmi = [](const Pokemon &p) {
-    return (p.gewicht / (p.groesse * p.groesse()));
+    return (p.gewicht / (p.groesse * p.groesse));
 };
 
 auto view = vec | filter(hat_typ_feuer) | transform(bmi);
@@ -94,17 +106,17 @@ auto view = vec | filter(hat_typ_feuer) | transform(bmi);
 \end{frame}
 
 \begin{frame}[fragile]{Mit Ranges und Pipes}
-    \begin{minted}[fontsize=\footnotesize]{c++}
+    \begin{minted}{c++}
 std::vector<Pokemon> get_pokemon() {...};
 auto pokemon = get_pokemon();
 auto view = vec
 | filter([](const Pokemon &p) {
-    return p.primaer_typ == "Feuer" || p.sekundaer_typ = "Feuer";
+    return p.primaer_typ == "Feuer"
+        || p.sekundaer_typ = "Feuer";
 })
 | transform([](const Pokemon &p) {
-    return (p.gewicht / (p.groesse * p.groesse()));
+    return (p.gewicht / (p.groesse * p.groesse));
 });
-
     \end{minted}
 \end{frame}
 
@@ -116,7 +128,7 @@ std::vector<Pokemon> get_pokemon() {...};
 auto pokemon = get_pokemon();
 auto it = min_element(
     pokemon, {},
-    &Pokemon:groesse
+    &Pokemon::groesse
 );
 
 std::cout << *it << std::enl;
@@ -131,7 +143,7 @@ std::vector<Pokemon> get_pokemon() {...};
 
 auto it = min_element(
     get_pokemon(), {},
-    &Pokemon:groesse
+    &Pokemon::groesse
 );
 std::cout << *it << std::enl;
     \end{minted}
@@ -143,18 +155,6 @@ std::cout << *it << std::enl;
         \end{onlyenv}
     \end{overlayarea}
 \end{frame}
-
-% \begin{frame}[fragile]{Probleme}
-%     \begin{minted}[]{c++}
-% using std::ranges;
-% std::vector<Pokemon> get_pokemons();
-
-% auto it = find(get_pokemons(), 10, &Pokemon:groesse);
-% do_something(*it);
-% //error: no match for ‘operator*’
-% //(operand type is ‘std::ranges::dangling’)
-%     \end{minted}
-% \end{frame}
 
 \begin{frame}[fragile]{Dangling View}
     \begin{overlayarea}{\linewidth}{6cm}
@@ -280,4 +280,95 @@ for (char c : view) {
                     \end{itemize}
             \end{itemize}
     \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Eigene View}
+    \begin{minted}{c++}
+template <std::ranges::input_range R>
+        requires std::ranges::viewable_range<R>
+    class view_convert : public std::ranges::view_base {
+    private:
+        R r;
+    
+        struct iterator_type : std::ranges::iterator_t<R> {
+    \end{minted}
+\end{frame}
+
+\begin{frame}[fragile, allowframebreaks]{Eigene View - Iterator}
+    \begin{minted}{c++}
+struct iterator_type : std::ranges::iterator_t<R> {
+    using base = std::ranges::iterator_t<R>;
+    iterator_type() = default;
+    iterator_type(base const &b) : base{b} {}
+
+    iterator_type &operator++() {
+        ++static_cast<base &>(*this);
+        return (*this);
+    }
+
+
+
+    int operator*() const {
+        auto original = *static_cast<base>(*this);
+        return original*10;
+    }
+
+    int operator[](size_t n) const
+    requires std::ranges::random_access_range<R> {
+        auto original = (static_cast<base>(*this))[n];
+        return original*10;
+    }
+
+};
+    \end{minted}
+\end{frame}
+
+\begin{frame}[fragile, allowframebreaks]{Eigene View}
+    \begin{minted}{c++}
+public:
+    view_convert() = default;
+    view_convert(view_convert const &rhs) = default;
+    view_convert(view_convert &&rhs) = default;
+    view_convert &operator=(
+        view_convert const &rhs) = default;
+    view_convert &operator=(
+        view_convert &&rhs) = default;
+    ~view_convert() = default;
+    view_convert(R &&r) : r{std::forward<R>(r)} {}
+
+    iterator_type begin() const {
+        return std::begin(r);
+    }
+    iterator_type end() const {
+        return std::end(r);
+    }
+    int operator[](size_t n) const
+    requires std::ranges::random_access_range<R>{
+        return begin()[n];
+    }
+};
+    \end{minted}
+\end{frame}
+
+\begin{frame}[fragile, allowframebreaks]{Eigene View}
+    \begin{minted}{c++}
+template <typename R>
+view_convert(R &&) -> view_convert<R>;
+
+struct convert_view_fn
+{
+    template <typename R>
+    auto operator()(R &&r) const
+    {
+        return view_convert{std::forward<R>(r)};
+    }
+
+    
+    template <typename R>
+    friend auto operator|(R &&r, convert_view_fn const &)
+    {
+        return view_convert{std::forward<R>(r)};
+    }
+};
+    \end{minted}
 \end{frame}

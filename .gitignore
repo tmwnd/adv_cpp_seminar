@@ -32,3 +32,6 @@ _minted-slides/*
 
 # RWTH logos
 logos/rwth*
+
+# pygmentize
+*.pyg
