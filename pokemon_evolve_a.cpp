@@ -7,6 +7,8 @@
 
 #include "pokemon.hpp"
 
+// Author: Felix Racz
+
 auto entwicklungen = get_entwicklung();
 auto pokemon = get_pokemon();
 

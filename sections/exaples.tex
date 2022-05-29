@@ -6,7 +6,7 @@
 
 \begin{frame}[fragile]{pokemon.hpp}
     \begin{minted}{cpp}
-struct Pokemon;     // id, name
+struct Pokemon;     // id, name, atk
 struct Entwicklung; // pokemon_id
 
 std::vector<Pokemon> get_pokemon();
@@ -40,7 +40,7 @@ std::map<int, Entwicklung> get_entwicklung();
 %     \end{minted}
 % \end{frame}
 
-\begin{frame}[fragile]{pokemon\_q.cpp}
+\begin{frame}[fragile]{pokemon\_evolve\_q.cpp}
     \begin{minted}{cpp}
 auto pokemon = get_pokemon();
 auto entwicklungen = get_entwicklung();
