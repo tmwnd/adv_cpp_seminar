@@ -35,8 +35,8 @@ std::vector<PokedexEintrag> pokedex;
         \textbf{Erster Ansatz:}
     \end{center}
     \begin{enumerate}
-        \item<1-> Sortiere alle Pokemon (nach \texttt{id})
-        \item<2-> Sortiere alle PokedexEinträge (nach \texttt{pokemon\_id})
+        \item<1-> Sortiere alle Pokémon (nach \texttt{id})
+        \item<2-> Sortiere alle PokédexEinträge (nach \texttt{pokemon\_id})
         \item<3-> Gehe von oben alle Einträge durch.
             Sobald die eine Liste die andere \enquote{überholt}, gib \texttt{false} zurück.
         \item<4-> Wenn wir am Ende der Listen sind, gib \texttt{true} zurück
@@ -116,8 +116,8 @@ std::ranges::equal(pokemon, pokedex,
         \item Erweitere Ranges durch Projection
 
               \begin{itemize}
-                  \item Reduziere jedes Pokemon auf einen \texttt{int}
-                  \item Reduziere analog jeden PokedexEintrag auf einen \texttt{int}
+                  \item Reduziere jedes Pokémon auf einen \texttt{int}
+                  \item Reduziere analog jeden PokédexEintrag auf einen \texttt{int}
                   \item Überlasse dem Compiler den Umgang mit diesen primitiven Datentypen
               \end{itemize}
     \end{itemize}

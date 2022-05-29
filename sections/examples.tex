@@ -47,10 +47,10 @@ std::map<int, Entwicklung> get_entwicklung();
     \vspace{1.5em}
 
     \begin{enumerate} %[label=\alph*)]
-        \item[a)]<2-> Kopieren Sie alle Starter Pokemon (inkl. Entwicklungen) in einen neuen Vector
+        \item[a)]<2-> Kopieren Sie alle Starter Pokémon (inkl. Entwicklungen) in einen neuen Vector
         \item[b)]<3-> Sortieren Sie diese nun nach Typ
-        \item[c)]<4-> Finden Sie in dem Vector nun das \enquote{beste} Pokemon
-        \item[d)]<5-> Zuletzt geben Sie das Pokemon mit der kleinsten und größten ID aus
+        \item[c)]<4-> Finden Sie in dem Vector nun das \enquote{beste} Pokémon
+        \item[d)]<5-> Zuletzt geben Sie das Pokémon mit der kleinsten und größten ID aus
     \end{enumerate}
 \end{frame}
 
@@ -61,12 +61,6 @@ std::map<int, Entwicklung> get_entwicklung();
         \item[\✨)]<3-> Kann man überall projection benutzen?
         \item[\✨)]<4-> Wie sieht es mit der performance aus?
     \end{enumerate}
-\end{frame}
-
-\begin{frame}{pokemon\_ranges\_q.cpp}
-    \begin{center}
-        \textbf{Code!}
-    \end{center}
 \end{frame}
 
 \begin{frame}[fragile]{pokemon\_ranges\_q.cpp}
@@ -101,9 +95,42 @@ auto find_best = [](const Pokemon& p) {
     \end{minted}
 \end{frame}
 
+\begin{frame}{pokemon\_ranges\_q.cpp}
+    \begin{center}
+        \textbf{Code!}
+    \end{center}
+\end{frame}
+
+\begin{frame}{pokemon\_views\_q.cpp}
+    \textbf{Aufgabe:}\\
+    Errechnen Sie das durchschnittliche Entwicklungslevel aller Feuerpokemon
+
+    \vspace{1.5em}
+
+    \begin{enumerate} %[label=\alph*)]
+        \item[a)]<2-> Erstellen Sie zuerst eine View die alle Pokémon mit Primärtyp Feuer enthält
+        \item[b)]<3-> Transformieren Sie die View sodass Sie zu jedem Pokémon das Entwicklungslevel erhalten
+        \item[c)]<4-> Filtern sie nun alle Pokémon die sich nicht entwickeln
+        \item[d)]<5-> Addieren Sie nun alle Entwicklungslevel und dividieren durch die Anzahl der Pokémon
+    \end{enumerate}
+\end{frame}
+
+\begin{frame}[fragile]{pokemon\_evolve\_q.cpp}
+    \begin{minted}{cpp}
+auto pokemon = get_pokemon();
+auto entwicklungen = get_entwicklung();
+    \end{minted}
+\end{frame}
+
+\begin{frame}{pokemon\_ranges\_q.cpp}
+    \begin{center}
+        \textbf{Code!}
+    \end{center}
+\end{frame}
+
 \begin{frame}{pokemon\_evolve\_q.cpp}
     \textbf{Aufgabe:}\\
-    Erstellen Sie nun eine View, welche alle gegebenen Pokemon eine Entwicklung \enquote{nach vorne} bewegt
+    Erstellen Sie nun eine View, welche alle gegebenen Pokémon eine Entwicklung \enquote{nach vorne} bewegt
 
     \vspace{1.5em}
 
@@ -152,7 +179,7 @@ auto entwicklungen = get_entwicklung();
 \end{frame}
 
 \begin{frame}{Tipps}
-    Nun überschreiben wir das n-te Pokemon mit seiner Entwicklung:
+    Nun überschreiben wir das n-te Pokémon mit seiner Entwicklung:
 
     \begin{center}
         \includegraphics[width=0.75\textwidth]{pictures/example_4.pdf}
@@ -168,7 +195,7 @@ auto entwicklungen = get_entwicklung();
 \end{frame}
 
 \begin{frame}{Tipps}
-    Sollten wir das n-te Pokemon nicht finden:
+    Sollten wir das n-te Pokémon nicht finden:
 
     \begin{center}
         \includegraphics[width=0.75\textwidth]{pictures/example_6.pdf}
