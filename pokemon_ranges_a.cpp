@@ -14,7 +14,6 @@ int main() {
     auto filter_starter = [] (const Pokemon& p) {return p.id <= 9;};
     auto type_value = [] (const Pokemon& p) {return p.primaer_typ * 100 + p.sekundaer_typ;};
     auto sort_type = [&type_value] (const Pokemon& p1, const Pokemon& p2) {return type_value(p1) < type_value(p2);};
-    auto find_best = [] (const Pokemon& p) {return p.id == 4;};
 
     std::ranges::copy_if(pokemon, std::back_inserter(starter), filter_starter);
 
