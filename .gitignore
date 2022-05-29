@@ -35,3 +35,6 @@ logos/rwth*
 
 # pygmentize
 *.pyg
+
+#
+.vscode
