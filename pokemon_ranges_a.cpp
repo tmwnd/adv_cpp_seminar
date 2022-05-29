@@ -20,7 +20,7 @@ int main() {
 
     std::ranges::sort(starter, sort_type);
     
-    auto it_best = std::ranges::find_if(starter, find_best);
+    auto it_best = std::ranges::find(starter, 4, &Pokemon::id);
     
     const auto [min, max] = std::ranges::minmax_element(starter, {}, &Pokemon::id);
 
