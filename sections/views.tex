@@ -161,7 +161,8 @@ std::cout << *it << std::enl;
         \begin{minted}{c++}
 std::vector<Pokemon> get_pokemon() {...};
 auto hat_typ_feuer = [](const Pokemon &p) { 
-    return p.primaer_typ == "Feuer" || p.sekundaer_typ = "Feuer";
+    return p.primaer_typ == "Feuer"
+        || p.sekundaer_typ = "Feuer";
 };
 
 auto pokemon = get_pokemon();
@@ -263,20 +264,19 @@ for (char c : view) {
     \begin{center}
         \textbf{Was kann man einem Range adaptor alles übergeben?}
     \end{center}
-\end{frame}
 
-\begin{frame}{\mintinline{c++}{std::ranges::viewable_range}}
+    \vspace{2.5em}
 
-    \textbf{Alles was eine \mintinline{c++}{std::ranges::viewable_range} ist!}
+    \onslide<2->{\textbf{Alles was eine \mintinline{c++}{std::ranges::viewable_range} ist!}}
 
     \begin{itemize}
-        \item<2-> lvalue reference (alles mit einem Namen)
-        \item<3-> \mintinline{c++}{std::borrowed_range}
+        \item<3-> lvalue reference (alles mit einem Namen)
+        \item<4-> \mintinline{c++}{std::borrowed_range}
             \begin{itemize}
-                \item<4-> Alle views
-                \item<5-> Typen mit \mintinline{c++}{std::enable_borrowed_range<T>} true
+                \item<5-> Alle views
+                \item<6-> Typen mit \mintinline{c++}{std::enable_borrowed_range<T>} true
                     \begin{itemize}
-                        \item<6-> \mintinline{c++}{std::span, std::string_view}
+                        \item<7-> \mintinline{c++}{std::span, std::string_view}
                     \end{itemize}
             \end{itemize}
     \end{itemize}

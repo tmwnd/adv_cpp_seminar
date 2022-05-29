@@ -4,6 +4,11 @@
 \usepackage{bbding}
 \usepackage{tcolorbox}
 
+\usepackage{textcomp}  % Required for encoding \textbigcircle
+\usepackage{scalerel}  % Required for emoji \scalerel
+
+\def\✨{\scalerel*{\includegraphics{pictures/2728.eps}}{\textrm{\textbigcircle}}}
+
 % Mathematikumgebung
 \usepackage{amsmath}
 \usepackage{amssymb}
@@ -25,9 +30,9 @@
 
 % Tabellenzeilen für booktabs anpassen -> call on frame with table
 \newcommand{\fixbooktabsrowhight}{%
-  \setlength{\aboverulesep}{0pt}
-  \setlength{\belowrulesep}{0pt}
-  \setlength{\extrarowheight}{.5ex}
+    \setlength{\aboverulesep}{0pt}
+    \setlength{\belowrulesep}{0pt}
+    \setlength{\extrarowheight}{.5ex}
 }
 
 % Zellen über mehrere Zeilen
@@ -39,10 +44,10 @@
 
 \usepackage[absolute,overlay]{textpos}
 \newcommand{\source}[1]{\begin{textblock*}{\linewidth}(1ex,\paperheight-2.75em)
-    \begin{beamercolorbox}[left]{framesource}
-      \usebeamerfont{framesource}\usebeamercolor[fg]{framesource} Source: {#1}
-    \end{beamercolorbox}
-  \end{textblock*}}
+        \begin{beamercolorbox}[left]{framesource}
+            \usebeamerfont{framesource}\usebeamercolor[fg]{framesource} Source: {#1}
+        \end{beamercolorbox}
+    \end{textblock*}}
 
 \usepackage{etoolbox}
 %% short titles for toc \(sub)section[SHORTTITLE for toc]{LONGTITLE for slide}
