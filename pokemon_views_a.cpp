@@ -45,6 +45,5 @@ int main() {
         level += l;
         size++;
     }
-    //TODO
     std::cout << "Durchschnittliches Entwicklungslevel: " << (double) level / size << std::endl;
 }
