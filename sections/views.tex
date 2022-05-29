@@ -42,7 +42,7 @@ for (const Pokemon& p : vec) {
     \end{minted}
 \end{frame}
 
-\begin{frame}[fragile]{alte STL}
+\begin{frame}[fragile]{Alte STL}
     \begin{minted}{c++}
 std::vector<Pokemon> get_pokemon() {...};
 auto pokemon = get_pokemon();
@@ -58,7 +58,7 @@ auto bmi = [](const Pokemon &p) {
     \end{minted}
 \end{frame}
 
-\begin{frame}[fragile]{alte STL}
+\begin{frame}[fragile]{Alte STL}
     \begin{minted}{c++}
 std::copy_if(
     pokemon.begin(), pokemon.end(),
@@ -331,11 +331,11 @@ long long do_something(auto &vec, int n) {
 int main() {
     std::vector<int> v = get_vektor(100000);
     auto v1 = eager_transform(v); // 3018µs
-    auto v2 = layz_transform(v); // 0µs
+    auto v2 = lazy_transform(v); // 0µs
     do_something(v1, 100000); // 425µs
     do_something(v2, 100000); // 8293µs
-    do_something(v1, 1000); // 114µs
-    do_something(v2, 1000); // 1352µs
+    do_something(v1, 10000); // 114µs
+    do_something(v2, 10000); // 1352µs
 }
     \end{minted}
 \end{frame}
@@ -348,7 +348,7 @@ template <std::ranges::input_range R>
     private:
         R r;
     
-        struct iterator_type : std::ranges::iterator_t<R> {
+        struct iterator_type : std::ranges::iterator_t<R>
     \end{minted}
 \end{frame}
 

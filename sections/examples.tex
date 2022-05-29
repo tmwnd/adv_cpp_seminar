@@ -59,7 +59,7 @@ std::map<int, Entwicklung> get_entwicklung();
     \begin{enumerate} %[label=\✨)]
         \item[\✨)]<2-> Kann man irgendwo projections benutzen?
         \item[\✨)]<3-> Kann man überall projection benutzen?
-        \item[\✨)]<4-> Wie sieht es mit der performance aus?
+        \item[\✨)]<4-> Wie sieht es mit der Performance aus?
     \end{enumerate}
 \end{frame}
 
@@ -74,9 +74,6 @@ auto pokemon = get_pokemon();
 auto filter_starter = [](const Pokemon& p) {
     return p.id <= 9;
 };
-auto type_value = [](const Pokemon& p) {
-    return p.primaer_typ * 100 + p.sekundaer_typ;
-};
 auto sort_id = [](const Pokemon& p1, const Pokemon& p2) {
     return p1.id < p2.id;
 };
@@ -85,6 +82,9 @@ auto sort_id = [](const Pokemon& p1, const Pokemon& p2) {
 
 \begin{frame}[fragile]{pokemon\_ranges\_q.cpp}
     \begin{minted}{cpp}
+auto type_value = [](const Pokemon& p) {
+    return p.primaer_typ * 100 + p.sekundaer_typ;
+};
 auto sort_type = [&type_value](const Pokemon& p1,
     const Pokemon& p2) {
     return type_value(p1) < type_value(p2);
