@@ -236,7 +236,7 @@ auto s_view(const std::string& s) {
     [...]
     return std::string_view{s};
 }
-std::string_view = s_view(s);
+std::string_view sv = s_view(s);
 auto view = sv
             | filter([](char c) { return c!= ' '; });
 for (char c : view) {
@@ -331,11 +331,11 @@ long long do_something(auto &vec, int n) {
 int main() {
     std::vector<int> v = get_vektor(100000);
     auto v1 = eager_transform(v); // 3018µs
-    auto v2 = lazy_transform(v); // 0µs
-    do_something(v1, 100000); // 425µs
-    do_something(v2, 100000); // 8293µs
-    do_something(v1, 10000); // 114µs
-    do_something(v2, 10000); // 1352µs
+    auto v2 = lazy_transform(v);  //    0µs
+    do_something(v1, 100000);     //  425µs
+    do_something(v2, 100000);     // 8293µs
+    do_something(v1, 10000);      //  114µs
+    do_something(v2, 10000);      // 1352µs
 }
     \end{minted}
 \end{frame}

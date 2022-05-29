@@ -7,7 +7,7 @@
 \begin{frame}[fragile]{pokemon.hpp}
     \begin{minted}{cpp}
 struct Pokemon;     // id, name, primaer_typ, ...
-struct Entwicklung; // pokemon_id
+struct Entwicklung; // pokemon_id, level
 
 std::vector<Pokemon> get_pokemon();
 std::map<int, Entwicklung> get_entwicklung();
@@ -115,14 +115,14 @@ auto find_best = [](const Pokemon& p) {
     \end{enumerate}
 \end{frame}
 
-\begin{frame}[fragile]{pokemon\_evolve\_q.cpp}
+\begin{frame}[fragile]{pokemon\_views\_q.cpp}
     \begin{minted}{cpp}
 auto pokemon = get_pokemon();
 auto entwicklungen = get_entwicklung();
     \end{minted}
 \end{frame}
 
-\begin{frame}{pokemon\_ranges\_q.cpp}
+\begin{frame}{pokemon\_views\_q.cpp}
     \begin{center}
         \textbf{Code!}
     \end{center}
