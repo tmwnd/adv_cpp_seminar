@@ -282,6 +282,64 @@ for (char c : view) {
     \end{itemize}
 \end{frame}
 
+\begin{frame}[fragile]{Performance}
+    \begin{minted}{c++}
+std::vector<long long> eager_transform(
+    const std::vector<long long> &vec) {
+    std::vector<long long> result;
+    for (long long i : vec) {
+        if (i % 2 == 0){
+            result.push_back(i * i);
+        }
+    }
+    return result;
+}
+    \end{minted}
+\end{frame}
+
+\begin{frame}[fragile]{Performance}
+    \begin{minted}{c++}
+auto lazy_transform(
+    const std::vector<long long> &vec) {
+        auto is_even = [](long long i){
+            return i % 2 == 0;
+        };
+        auto square = [](long long i){
+            return i * i;
+        };
+        return vec | filter(is_even) | transform(square);
+    }
+    \end{minted}
+\end{frame}
+
+\begin{frame}[fragile]{Performance}
+    \begin{minted}{c++}
+long long do_something(auto &vec, int n) {
+    long long sum = 0;
+    for (auto i : vec){
+        sum += i; n--;
+        if (n < 0)
+            break;
+    }
+    return sum;
+}
+    \end{minted}
+\end{frame}
+
+\begin{frame}[fragile]{Performance}
+    \begin{minted}{c++}
+int main() {
+    std::vector<int> v = get_vektor(100000);
+    auto v1 = eager_transform(v); // 3018µs
+    auto v2 = layz_transform(v); // 0µs
+    do_something(v1, 100000); // 425µs
+    do_something(v2, 100000); // 8293µs
+    do_something(v1, 1000); // 114µs
+    do_something(v2, 1000); // 1352µs
+}
+    \end{minted}
+\end{frame}
+
 \begin{frame}[fragile]{Eigene View}
     \begin{minted}{c++}
 template <std::ranges::input_range R>
