@@ -21,7 +21,6 @@ private:
     struct iterator_type : std::ranges::iterator_t<R> {
 
         using base = std::ranges::iterator_t<R>;
-        using reference = Pokemon;
 
         iterator_type() = default;
         iterator_type(base const & b) : base{b} {}
@@ -35,9 +34,8 @@ private:
             return (*this);
         }
 
-        reference operator*() const {
+        Pokemon operator*() const {
             auto original = *static_cast<base>(*this);
-            // std::cout << "original: " << original << std::endl;
             auto entwicklung_id = entwicklungen[original.id].pokemon_id;
             auto it = std::ranges::find(pokemon, entwicklung_id, &Pokemon::id);
             if (it == pokemon.end()) {
@@ -47,10 +45,6 @@ private:
         }
     };
 public:
-    using reference         = Pokemon;
-    using const_reference   = Pokemon;
-    using value_type        = Pokemon;
-
     using iterator          = iterator_type;
     using const_iterator    = iterator_type;
     view_entwickle() = default;
