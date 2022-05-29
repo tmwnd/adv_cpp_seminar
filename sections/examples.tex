@@ -6,7 +6,7 @@
 
 \begin{frame}[fragile]{pokemon.hpp}
     \begin{minted}{cpp}
-struct Pokemon;     // id, name, atk
+struct Pokemon;     // id, name, primaer_typ, ...
 struct Entwicklung; // pokemon_id
 
 std::vector<Pokemon> get_pokemon();
@@ -39,6 +39,76 @@ std::map<int, Entwicklung> get_entwicklung();
 % };
 %     \end{minted}
 % \end{frame}
+
+\begin{frame}{pokemon\_ranges\_q.cpp}
+    \textbf{Aufgabe:}\\
+    Überführen Sie die gegebenen STL Algorithmen in Ranges
+
+    \begin{enumerate} %[label=\alph*)]
+        \item[a)] Kopieren Sie alle Starter Pokemon (inkl. Entwicklungen) in einen neuen Vector
+        \item[b)] Sortieren Sie diese nun nach Typ
+        \item[c)] Finden Sie in dem Vector nun das beste Pokemon
+        \item[d)] Zuletzt geben Sie das Pokemon mit der kleinsten und größten ID aus
+    \end{enumerate}
+\end{frame}
+
+\begin{frame}{pokemon\_ranges\_q.cpp}
+    \textbf{Zusatzaufgaben:}\\
+    \begin{enumerate} %[label=\alph*)]
+        \item[\✨)] Kann man irgendwo projections benutzen?
+        \item[\✨)] Kann man überall projection benutzen?
+        \item[\✨)] Wie sieht es mit der performance aus?
+    \end{enumerate}
+\end{frame}
+
+\begin{frame}[fragile]{pokemon\_ranges\_q.cpp}
+    \begin{minted}{cpp}
+auto pokemon = get_pokemon();
+    \end{minted}
+\end{frame}
+
+\begin{frame}[fragile]{pokemon\_ranges\_q.cpp}
+    \begin{minted}{cpp}
+auto filter_starter = [](const Pokemon& p) {
+    return p.id <= 9;
+};
+auto type_value = [](const Pokemon& p) {
+    return p.primaer_typ * 100 + p.sekundaer_typ;
+};
+auto sort_id = [](const Pokemon& p1, const Pokemon& p2) {
+    return p1.id < p2.id;
+};
+    \end{minted}
+\end{frame}
+
+\begin{frame}[fragile]{pokemon\_ranges\_q.cpp}
+    \begin{minted}{cpp}
+auto sort_type = [&type_value](const Pokemon& p1,
+    const Pokemon& p2) {
+    return type_value(p1) < type_value(p2);
+};
+auto find_best = [](const Pokemon& p) {
+    return p.id == 4;
+};
+    \end{minted}
+\end{frame}
+
+\begin{frame}{pokemon\_evolve\_q.cpp}
+    \textbf{Aufgabe:}\\
+    Erstellen Sie nun eine View, welche alle gegebenen Pokemon eine Entwicklung \enquote{nach vorne} bewegt
+
+    \begin{enumerate} %[label=\alph*)]
+        \item[a)] Erstellen Sie ein data\_member Struct in der View
+        \item[b)] Erstellen Sie die jeweiligen Operatoren für:
+
+            \begin{itemize}
+                \item die View
+                \item die fn
+            \end{itemize}
+        \item[c)] Füllen Sie die Methoden begin() und end()
+        \item[d)] Nutzen Sie die View mithilfe von Pipes
+    \end{enumerate}
+\end{frame}
 
 \begin{frame}[fragile]{pokemon\_evolve\_q.cpp}
     \begin{minted}{cpp}
