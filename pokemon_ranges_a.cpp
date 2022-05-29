@@ -6,6 +6,8 @@
 
 #include "pokemon.hpp"
 
+// Author: Tim Wende
+
 int main() {
     auto pokemon = get_pokemon();
 
