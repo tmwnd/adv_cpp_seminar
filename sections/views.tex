@@ -30,12 +30,12 @@
 \begin{frame}[fragile]{Klassisch}
     \begin{minted}[fontsize=\footnotesize]{c++}
 std::vector<Pokemon> get_pokemon() {...};
-auto pokemon = get_pokemon();
-std::vector<int> bmis{};
+auto vec = get_pokemon();
+std::vector<double> bmis{};
 
 for (const Pokemon& p : vec) {
     if (p.primaer_typ == "Feuer" || p.sekundaer_typ = "Feuer") {
-        int bmi = p.gewicht() / (p.groesse * p.groesse);
+        double bmi = p.gewicht / (p.groesse * p.groesse);
         bmis.push_back(bmi);
     }
 }
@@ -45,7 +45,7 @@ for (const Pokemon& p : vec) {
 \begin{frame}[fragile]{Alte STL}
     \begin{minted}{c++}
 std::vector<Pokemon> get_pokemon() {...};
-auto pokemon = get_pokemon();
+auto vec = get_pokemon();
 std::vector<double> bmis;
 auto hat_typ_feuer = [](const Pokemon &p) {
     return p.primaer_typ == "Feuer"
@@ -61,12 +61,12 @@ auto bmi = [](const Pokemon &p) {
 \begin{frame}[fragile]{Alte STL}
     \begin{minted}{c++}
 std::copy_if(
-    pokemon.begin(), pokemon.end(),
+    vec.begin(), vec.end(),
     std::back_inserter(feuer_pokemon),
     hat_typ_feuer);
 std::transform(
     feuer_pokemon.begin(), feuer_pokemon.end(),
-    std::back_inserter(bmi),
+    std::back_inserter(bmis),
     bmi);
     \end{minted}
 \end{frame}
@@ -74,10 +74,10 @@ std::transform(
 \begin{frame}[fragile]{Mit Ranges}
     \begin{minted}{c++}
 std::vector<Pokemon> get_pokemon() {...};
-auto pokemon = get_pokemon();
+auto vec = get_pokemon();
 auto hat_typ_feuer = [](const Pokemon &p) {
     return p.primaer_typ == "Feuer"
-        || p.sekundaer_typ = "Feuer";
+        || p.sekundaer_typ == "Feuer";
 };
 auto bmi = [](const Pokemon &p) {
     return (p.gewicht / (p.groesse * p.groesse));
@@ -91,7 +91,7 @@ auto view = transform(filter(vec, hat_typ_feuer), bmi);
 \begin{frame}[fragile]{Mit Ranges und Pipes}
     \begin{minted}{c++}
 std::vector<Pokemon> get_pokemon() {...};
-auto pokemon = get_pokemon();
+auto vec = get_pokemon();
 auto hat_typ_feuer = [](const Pokemon &p) {
     return p.primaer_typ == "Feuer"
         || p.sekundaer_typ = "Feuer";
@@ -108,7 +108,7 @@ auto view = vec | filter(hat_typ_feuer) | transform(bmi);
 \begin{frame}[fragile]{Mit Ranges und Pipes}
     \begin{minted}{c++}
 std::vector<Pokemon> get_pokemon() {...};
-auto pokemon = get_pokemon();
+auto vec = get_pokemon();
 auto view = vec
 | filter([](const Pokemon &p) {
     return p.primaer_typ == "Feuer"
